@@ -11,5 +11,8 @@ public class DiffSelectActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         //PlanetView planetView = (PlanetView)this.findViewById(R.id.planetView);
+        
+        //Poajsdhakdhadaldhaldhakdladl
+        System.out.println("HA");
     }
 }
