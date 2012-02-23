@@ -10,6 +10,6 @@ public class MainMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         //PlanetView planetView = (PlanetView)this.findViewById(R.id.planetView);
-        // http://www.youtube.com/watch?v=dQw4w9WgXcQ&ob=av3e
+        // http://bit.ly/aOVMt5
     }
 }
