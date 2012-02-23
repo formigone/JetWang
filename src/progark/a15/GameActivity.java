@@ -11,5 +11,6 @@ public class GameActivity extends Activity {
         setContentView(R.layout.main);
         //DERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERP
         //PlanetView planetView = (PlanetView)this.findViewById(R.id.planetView);
+        // HERPA DERPA HERP DERP
     }
 }

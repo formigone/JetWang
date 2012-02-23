@@ -10,5 +10,6 @@ public class MainMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         //PlanetView planetView = (PlanetView)this.findViewById(R.id.planetView);
+        // HERPA DERPA HERP DERP 2
     }
 }
