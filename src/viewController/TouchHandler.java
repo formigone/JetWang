@@ -10,6 +10,8 @@ package viewController;
 
 import java.util.Vector;
 
+import model.GameEngine;
+
 import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;

@@ -3,6 +3,8 @@ package viewController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import model.GameEngine;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;

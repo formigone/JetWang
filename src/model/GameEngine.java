@@ -1,6 +1,8 @@
-package viewController;
+package model;
 
 import java.util.Vector;
+
+import viewController.TouchHandler;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
