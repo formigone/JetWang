@@ -1,9 +1,10 @@
-package model;
+package viewController;
 
 import java.util.ArrayList;
 import java.util.Vector;
 
-import viewController.TouchHandler;
+import model.GameLayer;
+
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
