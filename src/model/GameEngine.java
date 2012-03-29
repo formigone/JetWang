@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import viewController.TouchHandler;
@@ -11,6 +12,8 @@ import android.view.MotionEvent;
 
 public class GameEngine {
 	private Resources res;
+	//Game layers
+	private ArrayList<GameLayer> layers = new ArrayList<GameLayer>();
 	
 	//Controller class for handling touch events
 	private TouchHandler tHandler;
