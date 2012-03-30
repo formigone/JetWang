@@ -16,12 +16,8 @@ public class GameEngine {
 	//Game layers
 	private ArrayList<GameLayer> layers = new ArrayList<GameLayer>();
 	
-	//Controller class for handling touch events
-	private TouchHandler tHandler;
-	
 	public void init(Resources resources) {
 		this.res = resources;	
-		tHandler = new TouchHandler(this);
 	}
 	
 	/*
@@ -39,10 +35,9 @@ public class GameEngine {
 	}
 
 	/*
-	 * Touch handler sent from view. Pass this to TouchHandler. It will callback with required changes to UI.
+	 * Touch handler sent from view.
 	 */
 	public void onTouch(MotionEvent event) {
-		tHandler.onTouch(event);
 	}
 	/*
 	 * Callback from TouchHandler. Do necessary calls to game layers to update state as needed.
