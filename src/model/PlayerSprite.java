@@ -11,7 +11,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 	private Bitmap pLeft;
 	private Bitmap pRight;
 	private Bitmap pCenter;
-	//An animated sprite for the jetpack flame. Needs to be positioned relative to the avatar
+	//An animated sprite for the jetpack flame. TODO Needs to be positioned relative to the avatar
 	private AnimatedSprite flame;
 	
 	public PlayerSprite(Bitmap left,Bitmap right,Bitmap center,SpriteSheet flame) {
