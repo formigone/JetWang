@@ -1,6 +1,5 @@
 package model;
 
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
@@ -11,14 +10,14 @@ import android.graphics.RectF;
 public abstract class AbstractPhysSprite implements CollisionListener,Sprite {
 	protected RectF position = new RectF(0,0,0,0);
 	protected PointF speed = new PointF(0,0);
-	protected PointF accelleration = new PointF(0,0);
+	protected PointF acceleration = new PointF(0,0);
 	
 	public void update(float dt) {
 		//Move object according to equation of motion: r=r0+vt+at²/2
-		move(speed.x*dt+accelleration.x*dt*dt/2,
-			 speed.y*dt+accelleration.y*dt*dt/2);
+		move(speed.x*dt+acceleration.x*dt*dt/2,
+			 speed.y*dt+acceleration.y*dt*dt/2);
 		//Accellerate velocity (integration) v=v0+a*dt
-		speed.offset(accelleration.x*dt, accelleration.y*dt);
+		speed.offset(acceleration.x*dt, acceleration.y*dt);
 		
 		
 	}
@@ -30,8 +29,8 @@ public abstract class AbstractPhysSprite implements CollisionListener,Sprite {
 	//Some more physical parameters most sprites share.
 	public void setSpeed(PointF spd) { speed = spd; }
 	public PointF getSpeed() { return speed; }
-	public void setAccelleration(PointF acc) { accelleration=acc; }
-	public PointF getAccelleration() { return accelleration; }
+	public void setAccelleration(PointF acc) { acceleration=acc; }
+	public PointF getAccelleration() { return acceleration; }
 	
 	
 }

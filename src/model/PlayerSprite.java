@@ -30,13 +30,13 @@ public class PlayerSprite extends AbstractPhysSprite {
 	
 	@Override
 	public void draw(Canvas c) {
-		//x speed is much less than y speed. Jetpack man flying straight up
-		if(Math.abs(speed.x/speed.y)<0.1) {
+		//x accelleration is much less than y accelleration. Jetpack man accellerating straight up
+		if(Math.abs(acceleration.x/acceleration.y)<0.1) {
 			c.drawBitmap(pCenter, position.left, position.top, dummyPaint);
 			// TODO Add flame here
 		}
-		//Going to the left, as x speed <0
-		else if(speed.x<0) {
+		//Going to the left, as x acceleration <0
+		else if(acceleration.x<0) {
 			c.drawBitmap(pLeft, position.left, position.top, dummyPaint);
 			//TODO add flame here
 		}
