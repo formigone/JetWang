@@ -15,8 +15,8 @@ public abstract class AbstractPhysSprite implements CollisionListener,Sprite {
 	public void update(float dt) {
 		//Move object according to equation of motion: r=r0+vt+at²/2
 		position.offset(speed.x*dt+acceleration.x*dt*dt/2,
-			 speed.y*dt+acceleration.y*dt*dt/2);
-		//Accellerate velocity (integration) v=v0+a*dt
+						speed.y*dt+acceleration.y*dt*dt/2);
+		//Accelerate velocity (integration) v=v0+a*dt
 		speed.offset(acceleration.x*dt, acceleration.y*dt);
 		
 		
@@ -28,8 +28,8 @@ public abstract class AbstractPhysSprite implements CollisionListener,Sprite {
 	//Some more physical parameters most sprites share.
 	public void setSpeed(PointF spd) { speed = spd; }
 	public PointF getSpeed() { return speed; }
-	public void setAccelleration(PointF acc) { acceleration=acc; }
-	public PointF getAccelleration() { return acceleration; }
+	public void setAcceleration(PointF acc) { acceleration=acc; }
+	public PointF getAcceleration() { return acceleration; }
 	
 	
 }
