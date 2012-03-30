@@ -22,7 +22,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 	}
 	
 	@Override
-	public void collided(CollisionListener a, CollisionListener b) {
+	public void collided(CollisionListener c) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -44,7 +44,6 @@ public class PlayerSprite extends AbstractPhysSprite {
 		else {
 			//TODO add flame here
 			c.drawBitmap(pRight, position.left, position.top, dummyPaint);
-		}
-		
+		}	
 	}
 }

@@ -37,7 +37,7 @@ public class AnimatedSprite extends AbstractPhysSprite {
 	}
 
 	@Override
-	public void collided(CollisionListener a, CollisionListener b) {
+	public void collided(CollisionListener c) {
 		// TODO Auto-generated method stub
 		
 	}
