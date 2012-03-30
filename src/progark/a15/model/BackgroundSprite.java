@@ -1,12 +1,13 @@
 package progark.a15.model;
 
 import android.graphics.Canvas;
-import android.graphics.Point;
-import android.graphics.PointF;
 import android.graphics.RectF;
 
 public class BackgroundSprite implements Sprite {
 
+	/*
+	 * TODO Tile based backgrounds for space saving? Not implementing shit before I know.
+	 */
 	@Override
 	public void update(float dt) {
 		// TODO Auto-generated method stub

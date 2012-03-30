@@ -25,7 +25,9 @@ public class PlayerSprite extends AbstractPhysSprite {
 	
 	@Override
 	public void collided(CollisionListener c) {
-		// TODO Check what we collided with and take appropriate action!
+		if(c instanceof ObstacleSprite) {
+			//TODO action if collided with obstacle
+		}
 		
 	}
 
