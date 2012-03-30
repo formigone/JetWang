@@ -19,18 +19,20 @@ public class PlayerSprite extends AbstractPhysSprite {
 		this.pRight=right;
 		this.pCenter=center;
 		this.flame = new AnimatedSprite(flame);
+		//Set sprite size
+		this.position.inset(-pCenter.getWidth(), -pCenter.getHeight());
 	}
 	
 	@Override
 	public void collided(CollisionListener c) {
-		// TODO Auto-generated method stub
+		// TODO Check what we collided with and take appropriate action!
 		
 	}
 
 	
 	@Override
 	public void draw(Canvas c) {
-		//x accelleration is much less than y accelleration. Jetpack man accellerating straight up
+		//x acceleration is much less than y acceleration. Jetpack man accelerating straight up
 		if(Math.abs(acceleration.x/acceleration.y)<0.1) {
 			c.drawBitmap(pCenter, position.left, position.top, dummyPaint);
 			// TODO Add flame here
