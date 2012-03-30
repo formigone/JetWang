@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import progark.a15.R;
 
 import android.content.res.Resources;
@@ -20,7 +17,7 @@ public class SpriteFactory {
 	private float scalation=-1;
 	private Resources res;
 	//Input list of images to be cached here Format is as the example under with the launcher icon.
-	private int[] cachedImgKeys = {R.drawable.ic_launcher};
+	private final int[] cachedImgKeys = {R.drawable.ic_launcher};
 	//imageCache is synchronized with cachedImages: cachedImgKeys.key->imageCache.value
 	private Bitmap[] imageCache = new Bitmap[cachedImgKeys.length];
 	
@@ -38,13 +35,11 @@ public class SpriteFactory {
 		if(scalation!=-1) preloadImages();
 	}
 	
-	//Getter method for instance
+	//Getter method for singleton instance
 	public static SpriteFactory getInstance() {
 		return instance;
 	}
 	
-
-
 	/*
 	 * Private helper method for preloading and prescaling all sprites to be used.
 	 */
