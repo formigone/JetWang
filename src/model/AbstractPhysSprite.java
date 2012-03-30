@@ -7,15 +7,18 @@ import android.graphics.RectF;
  * AbstractSprite handles bounds and physics of a sprite.
  */
 
-public abstract class AbstractSprite implements CollisionListener,Sprite {
+public abstract class AbstractPhysSprite extends AbstractImageSprite implements CollisionListener {
 	private RectF position = new RectF(0,0,0,0);
 	private PointF speed = new PointF(0,0);
 	private PointF accelleration = new PointF(0,0);
 	
 	public void update(float dt) {
-		//Move object according to equation of motion: r=r0+vt-at²/2
-		move(speed.x*dt-accelleration.x*dt*dt/2,
-			 speed.y*dt-accelleration.y*dt*dt/2);
+		//Move object according to equation of motion: r=r0+vt+at²/2
+		move(speed.x*dt+accelleration.x*dt*dt/2,
+			 speed.y*dt+accelleration.y*dt*dt/2);
+		//Accellerate velocity (integration) v=v0+a*dt
+		speed.offset(accelleration.x*dt, accelleration.y*dt);
+		
 		
 	}
 	

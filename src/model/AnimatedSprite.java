@@ -6,7 +6,7 @@ import android.graphics.RectF;
 /*
  * AnimatedSprite is essentially a wrapper for a sprite sheet, and passes all its commands through it.
  */
-public class AnimatedSprite extends AbstractSprite {
+public class AnimatedSprite extends AbstractPhysSprite {
 	private SpriteSheet spriteSheet;
 
 	@Override
@@ -17,7 +17,6 @@ public class AnimatedSprite extends AbstractSprite {
 		spriteSheet.setPosition(getPosition());
 	}
 
-	@Override
 	public void draw(Canvas c) {
 		spriteSheet.draw(c);
 	}
