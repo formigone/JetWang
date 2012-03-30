@@ -9,6 +9,10 @@ import android.graphics.RectF;
 public class AnimatedSprite extends AbstractPhysSprite {
 	private SpriteSheet spriteSheet;
 
+	public AnimatedSprite(SpriteSheet sheet) {
+		spriteSheet = sheet;
+	}
+	
 	@Override
 	public void update(float dt) {
 		super.update(dt);

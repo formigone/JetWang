@@ -1,5 +1,6 @@
 package model;
 
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
@@ -7,10 +8,10 @@ import android.graphics.RectF;
  * AbstractSprite handles bounds and physics of a sprite.
  */
 
-public abstract class AbstractPhysSprite extends AbstractImageSprite implements CollisionListener {
-	private RectF position = new RectF(0,0,0,0);
-	private PointF speed = new PointF(0,0);
-	private PointF accelleration = new PointF(0,0);
+public abstract class AbstractPhysSprite implements CollisionListener,Sprite {
+	protected RectF position = new RectF(0,0,0,0);
+	protected PointF speed = new PointF(0,0);
+	protected PointF accelleration = new PointF(0,0);
 	
 	public void update(float dt) {
 		//Move object according to equation of motion: r=r0+vt+at²/2
