@@ -1,4 +1,4 @@
-package model;
+package progark.a15.model;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

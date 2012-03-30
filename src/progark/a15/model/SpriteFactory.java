@@ -1,4 +1,4 @@
-package model;
+package progark.a15.model;
 
 import progark.a15.R;
 

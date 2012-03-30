@@ -1,4 +1,4 @@
-package model;
+package progark.a15.model;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
