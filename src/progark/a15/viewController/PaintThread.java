@@ -15,7 +15,6 @@ public class PaintThread extends Thread{
 	private SurfaceHolder mSurfaceHolder;
 	private Handler mHandler;
 	private Context mContext;
-	private Paint mLinePaint;
 	private Paint blackPaint;
 	GameEngine gEngine;
 
@@ -36,7 +35,7 @@ public class PaintThread extends Thread{
 		this.mHandler = handler;
 		this.mContext = context;
 
-		//black painter below to clear the screen before the game is rendered
+		//black painter below to clear the screen before the game is rendered Maybe remove this if background sprites covers all?
 		blackPaint = new Paint();
 		blackPaint.setARGB(255, 0, 0, 0);
 

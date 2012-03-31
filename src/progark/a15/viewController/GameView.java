@@ -29,10 +29,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		//initialize our screen holder
 		SurfaceHolder holder = getHolder();
 		holder.addCallback( this);
-
-		//initialize our game engine
+		//Make our game engine. Initialize it when we know the screen size.
 		gEngine = new GameEngine();
-		gEngine.init(context.getResources());
 		//initialize our Thread class. A call will be made to start it later
 		thread = new PaintThread(holder, context, new Handler(), gEngine);
 		setFocusable(true);
@@ -53,6 +51,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
+		//Screen size known! Initialize engine!
+		gEngine.init(context.getResources());
 		gEngine.setScreenSize(w,h);
 	}
 

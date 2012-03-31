@@ -34,25 +34,28 @@ public class GameEngine {
 	 * This is called every PaintThread.delay ms. (70ms atm)
 	 */
 	public void update(float dt) {
-		
+		for(GameLayer l : layers)
+			l.update(dt);
 	}	
 	
 	/*
 	 * Draw is synchronized. Called about as often as the update()
 	 */
 	public void draw(Canvas canvas) {
-		
+		for(GameLayer l : layers)
+			l.draw(canvas);
 	}
 
 	/*
 	 * Touch handler sent from view. Only thing controlled in this view is the player.
 	 */
 	public void onTouchDown(MotionEvent event) {
-		//On touch, calculate accelleration vector.
+		//On touch, calculate acceleration vector.
 		player.accelerate(screenSize.x/2-event.getHistoricalX(event.getHistorySize()-1),
 						  event.getHistoricalY(event.getHistorySize()-1)-screenSize.y);		
 	}
 	public void onTouchUp(MotionEvent event) {
+		//Player now starts falling again.
 		player.decelerate();
 	}
 	
