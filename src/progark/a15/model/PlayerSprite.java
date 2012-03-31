@@ -3,8 +3,15 @@ package progark.a15.model;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.FloatMath;
 
 public class PlayerSprite extends AbstractPhysSprite {
+	//Player settings
+	private final float maxAcc=10;
+	private float maxSpeed=20;
+	private int fuel=100;
+	private float gravity=5;
+	
 	//All sprites need a paint class to draw.
 	private Paint dummyPaint = new Paint();
 	//Images for player left, right and center
@@ -21,7 +28,27 @@ public class PlayerSprite extends AbstractPhysSprite {
 		this.flame = new AnimatedSprite(flame);
 		//Set sprite size
 		this.position.inset(-pCenter.getWidth(), -pCenter.getHeight());
+		//Add gravity to player
+		acceleration.set(0, gravity);
 	}
+	
+	//Method called on touch to accelerate PlayerSprite. Takes a vector (x, y) and sets acceleration vector.
+	public void accelerate(int x,int y) {
+		/*
+		 * Must scale the vector given to make it have length=maxAcc
+		 * A little vector math gives the formulas (formula tested): 
+		 * xScl=maxAcc*sqrt(1/(1+y²/x²)) 
+		 * yScl=maxAcc*sqrt(1/(1+x²/y²))
+		 */
+		acceleration.set(maxAcc*FloatMath.sqrt(1/(1+(y*y)/(x*x))), 
+						 maxAcc*FloatMath.sqrt(1/(1+(x*x)/(y*y)))+gravity);
+	}
+	public void decelerate() {
+		acceleration.set(0,gravity);
+	}
+	
+	
+	
 	
 	@Override
 	public void collided(CollisionListener c) {
