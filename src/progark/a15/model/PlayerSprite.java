@@ -75,7 +75,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 			c.drawBitmap(pRight, getPosition().left, getPosition().top, dummyPaint);
 		}	
 	}
-	private void updateI(float dt) {
+	public void update(float dt) {
 		super.update(dt);
 		//Jetpack on. Decrease fuel. For simplicity, decrease is time elapsed. (adjust max fuel for game balance instead.)
 		if(isBoosting) {
