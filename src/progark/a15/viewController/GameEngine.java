@@ -11,6 +11,7 @@ import progark.a15.model.PlayerSprite;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -22,12 +23,18 @@ public class GameEngine {
 	private PlayerSprite player;
 	//Screen size
 	private Point screenSize = new Point(0,0);
+	//Difficulty set
+	private int difficulty;
+	//Point counter. Defined by achieved height and bonuses picked up.
+	private int points=0;
 	
-	public void init(Resources resources) {
+	public void init(Resources resources,int difficulty) {
 		this.res = resources;
 		layers.add(new GameLayer(false)); //Background layer 1
 		layers.add(new GameLayer(false)); //Background layer 2
 		layers.add(new GameLayer(true)); //Foreground layer (player, obstacles, enemies,) 
+		
+		this.difficulty=difficulty;
 	}
 	
 	/*
@@ -59,9 +66,16 @@ public class GameEngine {
 		player.decelerate();
 	}
 	
-	
-
 	public void setScreenSize(int w, int h) {
 		screenSize.set(w, h);
-	}	
+	}
+	
+	//Generic method for adding points
+	public void addPoints(int points) {
+		this.points+=points;
+	}
+	//PlayerSprite needs to check difficulty to calculate magnitude of bonuses collected.
+	public int getDifficulty() { return difficulty; }
+	
+	
 }

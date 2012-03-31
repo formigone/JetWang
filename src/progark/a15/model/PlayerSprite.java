@@ -1,5 +1,6 @@
 package progark.a15.model;
 
+import progark.a15.viewController.GameEngine;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,6 +9,7 @@ import android.util.FloatMath;
 public class PlayerSprite extends AbstractPhysSprite {
 	//Player settings
 	private int fuel=100;
+	private final int fuelMax=100;
 	private float gravity=5;
 	private boolean isBoosting=false;
 	//All sprites need a paint class to draw.
@@ -18,12 +20,15 @@ public class PlayerSprite extends AbstractPhysSprite {
 	private Bitmap pCenter;
 	//An animated sprite for the jetpack flame. TODO Needs to be positioned relative to the avatar
 	private AnimatedSprite flame;
+	//Callback to game engine: update on points earned.
+	private GameEngine gEngine;
 	
-	public PlayerSprite(Bitmap left,Bitmap right,Bitmap center,SpriteSheet flame) {
+	public PlayerSprite(Bitmap left,Bitmap right,Bitmap center,SpriteSheet flame,GameEngine engine) {
 		this.pLeft=left;
 		this.pRight=right;
 		this.pCenter=center;
 		this.flame = new AnimatedSprite(flame);
+		this.gEngine=engine;
 		//Set sprite size
 		setSize(pCenter.getWidth(), pCenter.getHeight());
 		//Add gravity to player
@@ -114,7 +119,28 @@ public class PlayerSprite extends AbstractPhysSprite {
 		}
 	}
 	private void collectSprite(CollectableSprite c) {
-		
+		switch (c.getType()) {
+		//Small and large fuel bonus
+		case FUEL_ADD: case FUEL_FILL:
+			addFuel(getMagnitude(c.getType()));
+			break;
+		//Small and large point bonus
+		case BONUSPOINT_SMALL: case BONUSPOINT_BIG:
+			gEngine.addPoints(getMagnitude(c.getType()));
+			break;
+		}
 		
 	}
+	
+	private int getMagnitude(BonusType b) {
+		if(gEngine.getDifficulty()==0) return b.getEasy();
+		if(gEngine.getDifficulty()==1) return b.getMedium();
+		if(gEngine.getDifficulty()==2) return b.getHard();
+		else return 0;
+	}
+	private void addFuel(int num) {
+		fuel+=num;
+		if(fuel>fuelMax) fuel=fuelMax;
+	}
+	
 }
