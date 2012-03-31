@@ -26,9 +26,9 @@ public class PlayerSprite extends AbstractPhysSprite {
 	@Override
 	public void collided(CollisionListener c) {
 		if(c instanceof ObstacleSprite) {
-			//TODO action if collided with obstacle
-		}
-		
+			//Cast to ObstacleSprite
+			fixCollision((ObstacleSprite)c);
+		}	
 	}
 
 	
@@ -49,5 +49,26 @@ public class PlayerSprite extends AbstractPhysSprite {
 			//TODO add flame here
 			c.drawBitmap(pRight, position.left, position.top, dummyPaint);
 		}	
+	}
+	
+	
+	private void fixCollision(ObstacleSprite d) {
+		//All these set speed towards colliding entity to 0 and nudges the player a bit away. No bounce.
+		if((d.getPosition().right-position.left<5)) { //Collided with obstacle on left side
+			speed.x=0;
+			position.offset(d.getPosition().right-position.left,0);
+		}
+		else if((position.right-d.getPosition().left<5)) { //Collided with obstacle on right side
+			speed.x=0;
+			position.offset(d.getPosition().left-position.right,0);
+		}
+		else if((position.bottom-d.getPosition().top<5)) { //Landed on obstacle
+			speed.y=0;
+			position.offset(0,d.getPosition().top-position.bottom);
+		}
+		else if(d.getPosition().bottom-position.top<5) { //Collided with obstacle bottom
+			speed.y=0;
+			position.offset(0,d.getPosition().bottom-position.top);
+		}
 	}
 }
