@@ -1,0 +1,88 @@
+package progark.a15.viewController;
+
+import android.content.Context;
+import android.os.Handler;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+
+public class GameView extends SurfaceView implements SurfaceHolder.Callback{
+	
+	//Game engine
+	private GameEngine gEngine;
+
+	//objects which house info about the screen
+	private Context context;
+
+	//our Thread class which houses the game loop
+	private PaintThread thread;
+
+	//initialization code
+	void initView(){
+		//initialize our screen holder
+		SurfaceHolder holder = getHolder();
+		holder.addCallback( this);
+
+		//initialize our game engine
+		gEngine = new GameEngine();
+		gEngine.init(context.getResources());
+		//initialize our Thread class. A call will be made to start it later
+		thread = new PaintThread(holder, context, new Handler(), gEngine);
+		setFocusable(true);
+	}	
+
+	//class constructors
+	public GameView(Context contextS, AttributeSet attrs, int defStyle){
+		super(contextS, attrs, defStyle);
+		context=contextS;
+		initView();
+	}
+	public GameView(Context contextS, AttributeSet attrs){
+		super(contextS, attrs);
+		context=contextS;
+		initView();
+	}
+	
+//	@Override
+//	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+//		super.onSizeChanged(w, h, oldw, oldh);
+//		gEngine.setScreenSize(w,h);
+//	}
+
+	//these methods are overridden from the SurfaceView super class. They are automatically called when a SurfaceView is created, resumed or suspended.
+	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {}
+
+	public void surfaceDestroyed(SurfaceHolder arg0) {
+		boolean retry = true;
+		//code to end gameloop
+		thread.state=PaintThread.PAUSED;
+		while (retry) {
+			try {
+				//code to kill Thread
+				thread.join();
+				retry = false;
+			} catch (InterruptedException e) {
+			}
+		}
+
+	}
+
+	public void surfaceCreated(SurfaceHolder arg0) {
+		if(thread.state==PaintThread.PAUSED){
+			//When game is opened again in the Android OS
+			thread = new PaintThread(getHolder(), context, new Handler(), gEngine);
+			thread.start();
+		}else{
+			//creating the game Thread for the first time
+			thread.start();
+		}
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		gEngine.onTouch(event);
+		return true;
+	}
+
+}
