@@ -11,7 +11,7 @@ public class ObstacleSprite extends AbstractPhysSprite{
 	public ObstacleSprite(Bitmap img) {
 		image=img;
 		//Set bounding box
-		position.inset(-img.getWidth(), -img.getHeight());
+		setSize(img.getWidth(), img.getHeight());
 	}
 
 	@Override
@@ -19,7 +19,7 @@ public class ObstacleSprite extends AbstractPhysSprite{
 
 	@Override
 	public void draw(Canvas c) {
-		c.drawBitmap(image, position.left, position.top, dummyPaint);	
+		c.drawBitmap(image, getPosition().left, getPosition().top, dummyPaint);	
 	}
 	
 }
