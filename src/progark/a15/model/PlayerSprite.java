@@ -53,6 +53,11 @@ public class PlayerSprite extends AbstractPhysSprite {
 			//Cast to ObstacleSprite
 			fixCollision((ObstacleSprite)c);
 		}	
+		if(c instanceof CollectableSprite ) {
+			//Sniff out CollectableSprite attributes and delete the sprite
+			collectSprite((CollectableSprite)c);
+			
+		}
 	}
 
 	
@@ -107,5 +112,9 @@ public class PlayerSprite extends AbstractPhysSprite {
 			setSpeed(getSpeed().x,0);
 			move(0,d.getPosition().bottom-getPosition().top);
 		}
+	}
+	private void collectSprite(CollectableSprite c) {
+		
+		
 	}
 }
