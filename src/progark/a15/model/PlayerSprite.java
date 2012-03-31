@@ -9,7 +9,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 	//Player settings
 	private int fuel=100;
 	private float gravity=5;
-	
+	private boolean isBoosting=false;
 	//All sprites need a paint class to draw.
 	private Paint dummyPaint = new Paint();
 	//Images for player left, right and center
@@ -38,10 +38,12 @@ public class PlayerSprite extends AbstractPhysSprite {
 		 * xScl=maxAcc*sqrt(1/(1+y²/x²)) 
 		 * yScl=maxAcc*sqrt(1/(1+x²/y²))
 		 */
+		isBoosting=true;
 		setAcceleration(maxAcc*FloatMath.sqrt(1/(1+(y*y)/(x*x))), 
 						maxAcc*FloatMath.sqrt(1/(1+(x*x)/(y*y)))+gravity);
 	}
 	public void decelerate() {
+		isBoosting=false;
 		setAcceleration(0,gravity);
 	}
 	
@@ -72,6 +74,18 @@ public class PlayerSprite extends AbstractPhysSprite {
 			//TODO add flame here
 			c.drawBitmap(pRight, getPosition().left, getPosition().top, dummyPaint);
 		}	
+	}
+	private void updateI(float dt) {
+		super.update(dt);
+		//Jetpack on. Decrease fuel. For simplicity, decrease is time elapsed. (adjust max fuel for game balance instead.)
+		if(isBoosting) {
+			fuel-=dt;
+			//We're empty! Decelerate and set fuel to 0 (no negatives accepted)
+			if(fuel<=0) {
+				decelerate();
+				fuel=0;
+			}
+		}
 	}
 	
 	
