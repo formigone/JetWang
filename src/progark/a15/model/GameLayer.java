@@ -45,7 +45,8 @@ public class GameLayer {
 			if(s.getPosition().top>c.getClipBounds().bottom) {
 				sprites.remove(s);
 			}
-			else {
+			//Don't draw sprites above screen clip
+			else if(s.getPosition().bottom>c.getClipBounds().top) {
 				s.draw(c);
 			}
 		}
