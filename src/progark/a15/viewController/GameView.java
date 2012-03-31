@@ -17,6 +17,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
 	//our Thread class which houses the game loop
 	private PaintThread thread;
+	
+	//Time counter for touch events. Only accept one touch event every "threshold" ms.
+	private long lastTime = -1;
+	//Only update five times a second.
+	private long threshold = 500;
+
 
 	//initialization code
 	void initView(){
@@ -44,11 +50,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		initView();
 	}
 	
-//	@Override
-//	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-//		super.onSizeChanged(w, h, oldw, oldh);
-//		gEngine.setScreenSize(w,h);
-//	}
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		gEngine.setScreenSize(w,h);
+	}
 
 	//these methods are overridden from the SurfaceView super class. They are automatically called when a SurfaceView is created, resumed or suspended.
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {}
@@ -81,7 +87,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		gEngine.onTouch(event);
+		if(event.getAction()==MotionEvent.ACTION_UP) {
+			gEngine.onTouchUp(event);
+		}
+		else {
+		    long now = System.currentTimeMillis();
+		    if (lastTime > -1 && (now - lastTime) < threshold) {
+		        // Return if a touch event was received less than "threshold" time ago
+		        return false;
+		    }
+		    lastTime = now;
+			gEngine.onTouchDown(event);
+		}
 		return true;
 	}
 

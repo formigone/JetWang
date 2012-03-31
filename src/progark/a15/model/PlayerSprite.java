@@ -31,7 +31,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 	}
 	
 	//Method called on touch to accelerate PlayerSprite. Takes a vector (x, y) and sets acceleration vector.
-	public void accelerate(int x,int y) {
+	public void accelerate(float x,float y) {
 		/*
 		 * Must scale the vector given to make it have length=maxAcc
 		 * A little vector math gives the formulas (formula tested): 

@@ -21,7 +21,7 @@ public class PaintThread extends Thread{
 
 	//for consistent rendering
 	private float sleepTime;
-	//amount of time between frames (in milliseconds), optimally
+	//amount of time between frames (in seconds), optimally
 	private final float delay=0.7f;
 
 	//state of game (Running or Paused).
