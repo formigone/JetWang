@@ -3,6 +3,7 @@ package progark.a15.model;
 import java.util.ArrayList;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 
@@ -40,7 +41,13 @@ public class GameLayer {
 	}
 	public void draw(Canvas c) {
 		for(Sprite s : sprites) {
-			s.draw(c);
+			//Sprite has passed below game screen. Delete it.
+			if(s.getPosition().top>c.getClipBounds().bottom) {
+				sprites.remove(s);
+			}
+			else {
+				s.draw(c);
+			}
 		}
 	}
 

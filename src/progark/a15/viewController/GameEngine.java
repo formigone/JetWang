@@ -49,6 +49,15 @@ public class GameEngine {
 	 * Draw is synchronized. Called about as often as the update()
 	 */
 	public void draw(Canvas canvas) {
+		//Player is below screen. Game over.
+		if(player.getPosition().top>canvas.getClipBounds().bottom) {
+			
+		}
+		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
+		else if(player.getPosition().bottom>canvas.getClipBounds().centerY()) {
+			//Camera might move the wrong way here (did not test) if it does, put a minus before the calculation below.
+			canvas.getMatrix().postTranslate(0, player.getPosition().bottom-canvas.getClipBounds().centerY());
+		}
 		for(GameLayer l : layers)
 			l.draw(canvas);
 	}
