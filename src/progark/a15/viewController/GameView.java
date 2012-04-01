@@ -52,8 +52,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		//Screen size known! Initialize engine! Set difficulty TODO: Get difficulty selection
-		gEngine.init(context.getResources(),0);
 		gEngine.setScreenSize(w,h);
+		gEngine.init(context.getResources(),0);
 	}
 
 	//these methods are overridden from the SurfaceView super class. They are automatically called when a SurfaceView is created, resumed or suspended.

@@ -84,6 +84,8 @@ public class GameEngine {
 	
 	public void setScreenSize(int w, int h) {
 		screenSize.set(w, h);
+		//TODO: We now know the screen size. Initialize the SpriteFactory!
+		//TODO: Ensure that the SpriteFactory is not used before it is initialized. Where to put SpriteFactory generating calls?
 	}
 	
 	//Generic method for adding points
