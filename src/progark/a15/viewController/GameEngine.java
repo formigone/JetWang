@@ -33,6 +33,10 @@ public class GameEngine {
 		layers.add(new GameLayer(false)); //Background layer 1
 		layers.add(new GameLayer(false)); //Background layer 2
 		layers.add(new GameLayer(true)); //Foreground layer (player, obstacles, enemies,) 
+		/*
+		 * TODO: Use Spritefactory and set up initial game board
+		 */
+		
 		
 		this.difficulty=difficulty;
 	}
@@ -41,6 +45,9 @@ public class GameEngine {
 	 * This is called every PaintThread.delay ms. (70ms atm)
 	 */
 	public void update(float dt) {
+		//TODO: Randomly generate bonuses and obstacles?
+		//TODO: Obstacles and bonuses as a function of achieved height?
+		
 		for(GameLayer l : layers)
 			l.update(dt);
 	}	
@@ -56,7 +63,7 @@ public class GameEngine {
 		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
 		else if(player.getPosition().bottom>canvas.getClipBounds().centerY()) {
 			//Camera might move the wrong way here (did not test) if it does, put a minus before the calculation below.
-			canvas.getMatrix().postTranslate(0, player.getPosition().bottom-canvas.getClipBounds().centerY());
+			canvas.getMatrix().postTranslate(0, player.getPosition().bottom-canvas.getClipBounds().centerY());			
 		}
 		for(GameLayer l : layers)
 			l.draw(canvas);

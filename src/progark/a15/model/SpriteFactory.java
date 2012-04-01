@@ -40,6 +40,14 @@ public class SpriteFactory {
 		return instance;
 	}
 	
+	
+	/*
+	 * TODO:
+	 * Methods for generating completely rigged sprites here
+	 * 
+	 * 
+	 */
+	
 	/*
 	 * Private helper method for preloading and prescaling all sprites to be used.
 	 */

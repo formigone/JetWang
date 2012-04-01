@@ -39,6 +39,10 @@ public class GameLayer {
 					}
 		}
 	}
+	
+	/*
+	 * Passes draw cals to all sprites Checking of bounds might become a bottleneck! TODO: profile the draw stack.
+	 */
 	public void draw(Canvas c) {
 		for(Sprite s : sprites) {
 			//Sprite has passed below game screen. Delete it.
