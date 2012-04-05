@@ -11,25 +11,40 @@ public class SpriteSheet {
 	private Bitmap bmp;
 	private Rect srcRect=new Rect(0,0,0,0);
 	private RectF dstRect=new RectF(0,0,0,0);
-	private int nFrames;
+	private int width;
+	private int height;
 	private float step;
 	private float dtBuffer=0;
-	private int curFrame=0;
+	private int curX=0;
+	private int curY=0;
 	private Point bmpSize;
-	public SpriteSheet(int nFrames,float step, Bitmap bmp) {
-		this.nFrames = nFrames;
+	/*
+	 * Constructor. width is number of sprites in the image width.
+	 * Height is number of sprites in te image height
+	 * Step is number of seconds to show each sprite before switching to the next.
+	 * the bitmap is the actual sprite.
+	 */
+	
+	public SpriteSheet(int nFrames,int height,float step, Bitmap bmp) {
+		this.height = height;
+		this.width = width;
 		this.step = step;
 		this.bmp=bmp;
-		bmpSize=new Point(bmp.getWidth()/nFrames,bmp.getHeight());		
+		bmpSize=new Point(bmp.getWidth()/width,bmp.getHeight()/height);		
 	}
 	public void update(float dt) {
 		//Update frame counter
 		dtBuffer+=dt;
 		if(dtBuffer>step) {
 			dtBuffer-=step;
-			curFrame++;
-			curFrame = (curFrame==nFrames) ? 0 : curFrame;
-			srcRect.set(bmpSize.x*curFrame,0, (1+curFrame)*bmpSize.x, bmpSize.y);
+			curX++;
+			if(curX==width) {
+				curX=0;
+				curY++;
+			}
+			curY = (curY==height) ? 0 : curY;  
+
+			srcRect.set(bmpSize.x*curX,bmpSize.y*curY, (1+curX)*bmpSize.x, (1+curY)*bmpSize.y);
 		}		
 	}
 	public void draw(Canvas canvas) {
@@ -41,7 +56,9 @@ public class SpriteSheet {
 		return bmpSize;
 	}
 	
-	public int getNFrames() { return nFrames; }
+	public int getHeight() { return height; }
+	public int hetWidth() { return width; }
+	
 	
 	public void setPosition(RectF r) { dstRect.set(r); }
 	public RectF getPosition() { return dstRect; }
