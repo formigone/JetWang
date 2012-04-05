@@ -18,7 +18,12 @@ public class SpriteFactory {
 	private PointF scalation= new PointF(-1,-1);
 	private Resources res;
 	//Input list of images to be cached here Format is as the example under with the launcher icon.
-	private final int[] cachedImgKeys = {R.drawable.ic_launcher};
+	private final int[] cachedImgKeys = {R.drawable.backgroundmountain,
+										 R.drawable.backgroundplain,
+										 R.drawable.backgroundstart,
+										 R.drawable.cloud128,
+										 R.drawable.flamesheet64,
+										 R.drawable.sprite128};
 	//imageCache is synchronized with cachedImages: cachedImgKeys.key->imageCache.value
 	private Bitmap[] imageCache = new Bitmap[cachedImgKeys.length];
 	
