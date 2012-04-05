@@ -9,12 +9,13 @@ import android.graphics.BitmapFactory;
  * Singleton factory for creating sprites.
  * MUST BE INITIALIZED BY PROVIDING SCALING PERCENTAGE AND IMAGE RESOURCE CLASS PRIOR TO USE!
  */
+import android.graphics.PointF;
 
 public class SpriteFactory {
 	//Singleton instance
 	private static final SpriteFactory instance = new SpriteFactory();
 	//Variables needing to be set prior to use
-	private float scalation=-1;
+	private PointF scalation= new PointF(-1,-1);
 	private Resources res;
 	//Input list of images to be cached here Format is as the example under with the launcher icon.
 	private final int[] cachedImgKeys = {R.drawable.ic_launcher};
@@ -23,16 +24,19 @@ public class SpriteFactory {
 	
 	/*
 	 * Run these prior to use! If both are set, the factory automatically starts preloading images.
+	 * SetScalation takes an image reference to an image supposed to fill the screen, and the real screen dimensions.
 	 */
-	public void setScalation(float scl) {
-		scalation = scl;
+	public void setScalation(int reference,int width,int height) {
+		Bitmap screenFill = BitmapFactory.decodeResource(res, reference);
+		scalation.set(width/screenFill.getWidth(), height/screenFill.getHeight());
+		screenFill.recycle();
 		//Both values set. Start preloading
 		if(res!=null) preloadImages();
 	}
 	public void setResources(Resources r) {
 		res = r;
 		//Both values set. Start preloading
-		if(scalation!=-1) preloadImages();
+		if(scalation.x!=-1) preloadImages();
 	}
 	
 	//Getter method for singleton instance
@@ -73,7 +77,7 @@ public class SpriteFactory {
 	 * Scale an image by a given percentage (to fit screen)
 	 */
 	private Bitmap scalePercentage(Bitmap src) {
-		return Bitmap.createScaledBitmap(src, (int)(src.getWidth()*scalation), (int)(src.getHeight()*scalation), true);
+		return Bitmap.createScaledBitmap(src, (int)(src.getWidth()*scalation.x), (int)(src.getHeight()*scalation.y), true);
 	}	
 
 }

@@ -3,8 +3,10 @@ package progark.a15.viewController;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import progark.a15.R;
 import progark.a15.model.GameLayer;
 import progark.a15.model.PlayerSprite;
+import progark.a15.model.SpriteFactory;
 
 
 
@@ -32,10 +34,9 @@ public class GameEngine {
 		this.res = resources;
 		layers.add(new GameLayer(false)); //Background layer 1
 		layers.add(new GameLayer(false)); //Background layer 2
-		layers.add(new GameLayer(true)); //Foreground layer (player, obstacles, enemies,) 
-		/*
-		 * TODO: Use Spritefactory and set up initial game board
-		 */
+		layers.add(new GameLayer(true)); //Foreground layer (player, obstacles, enemies,)
+		//Give spriteFactory access to the game resources
+		SpriteFactory.getInstance().setResources(resources);
 		
 		
 		this.difficulty=difficulty;
@@ -84,6 +85,8 @@ public class GameEngine {
 	
 	public void setScreenSize(int w, int h) {
 		screenSize.set(w, h);
+		//TODO: Pass id of background image supposed to fill the screen here!
+		SpriteFactory.getInstance().setScalation(R.drawable.ic_launcher,w,h);
 		//TODO: We now know the screen size. Initialize the SpriteFactory!
 		//TODO: Ensure that the SpriteFactory is not used before it is initialized. Where to put SpriteFactory generating calls?
 	}
