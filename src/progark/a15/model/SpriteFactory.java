@@ -78,6 +78,9 @@ public class SpriteFactory {
 	 */
 	private Bitmap scalePercentage(Bitmap src) {
 		return Bitmap.createScaledBitmap(src, (int)(src.getWidth()*scalation.x), (int)(src.getHeight()*scalation.y), true);
-	}	
+	}
+	
+	//TODO: Use this method to recalculate speed and such to real screen coordinates.
+	public PointF getScalation() { return scalation; }
 
 }
