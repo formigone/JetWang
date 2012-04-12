@@ -14,10 +14,8 @@ public class ObstacleSprite extends AbstractPhysSprite{
 		setSize(img.getWidth(), img.getHeight());
 	}
 
-	@Override
 	public void collided(CollisionListener c) {}
 
-	@Override
 	public void draw(Canvas c) {
 		c.drawBitmap(image, getPosition().left, getPosition().top, dummyPaint);	
 	}

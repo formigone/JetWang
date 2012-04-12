@@ -21,27 +21,23 @@ public class BackgroundSprite implements Sprite {
 	/*
 	 * TODO Tile based backgrounds for space saving? Not implementing shit before I know.
 	 */
-	@Override
 	public void update(float dt) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void draw(Canvas c) {
 		c.drawBitmap(img,bound,pos, dummyPaint);		
 	}
 
-	@Override
 	public void setPosition(RectF p) {
 		pos.set(p);
 	}
 
-	@Override
 	public RectF getPosition() {
 		return pos;
 	}
-	@Override
+
 	public void move(float dx, float dy) {
 		pos.offset(dx, dy);
 		

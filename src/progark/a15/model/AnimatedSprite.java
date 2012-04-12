@@ -36,7 +36,6 @@ public class AnimatedSprite extends AbstractPhysSprite {
 		spriteSheet.setPosition(r);
 	}
 
-	@Override
 	public void collided(CollisionListener c) {
 		// TODO Auto-generated method stub
 		

@@ -61,7 +61,6 @@ public class PlayerSprite extends AbstractPhysSprite {
 		setAcceleration(0,gravity);
 	}
 	
-	@Override
 	public void collided(CollisionListener c) {
 		if(c instanceof ObstacleSprite) {
 			//Cast to ObstacleSprite
@@ -75,21 +74,17 @@ public class PlayerSprite extends AbstractPhysSprite {
 	}
 
 	
-	@Override
 	public void draw(Canvas c) {
 		//x acceleration is much less than y acceleration. Jetpack man accelerating straight up
 		if(Math.abs(getAcceleration().x/getAcceleration().y)<0.1) {
 			c.drawBitmap(pCenter, getPosition().left, getPosition().top, dummyPaint);
-			// TODO Add flame here
 		}
 		//Going to the left, as x acceleration <0
 		else if(getAcceleration().x<0) {
 			c.drawBitmap(pLeft, getPosition().left, getPosition().top, dummyPaint);
-			//TODO add flame here
 		}
 		//Else right
 		else {
-			//TODO add flame here
 			c.drawBitmap(pRight, getPosition().left, getPosition().top, dummyPaint);
 		}	
 		
