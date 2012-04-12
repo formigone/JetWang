@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 
 
 public class GameLayer {
@@ -32,7 +33,7 @@ public class GameLayer {
 			if(isPhysical && s1 instanceof CollisionListener)
 				for(Sprite s2 : sprites)
 					//Collision detected! Activate casting hell!
-					if(RectF.intersects(s1.getPosition(),s2.getPosition()) && s2 instanceof CollisionListener) {
+					if(RectF.intersects(s1.getPosition(),s2.getPosition()) && s2 instanceof CollisionListener && s2 != s1) {
 						((CollisionListener) s1).collided((CollisionListener) s2);
 						//Comment out line below if only player collides with other objects.
 						((CollisionListener) s2).collided((CollisionListener) s1);
