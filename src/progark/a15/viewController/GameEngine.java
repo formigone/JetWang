@@ -57,11 +57,17 @@ public class GameEngine {
 		//TODO: Obstacles and bonuses as a function of achieved height?
 		
 		//Player stops when hitting screen sides.
-		if(player.getPosition().left<0)
-			player.move(-player.getPosition().left, 0);
-		if(player.getPosition().right>this.screenSize.x)
-			player.move(screenSize.x-player.getPosition().right, 0);
+		if(player.getPosition().left<0) {
+			player.move(-player.getPosition().left+1, 0);
+			player.setSpeed(0, player.getSpeed().y);
+		}
+
+		if(player.getPosition().right>this.screenSize.x) {
+			player.move(screenSize.x-player.getPosition().right-1, 0);
+			player.setSpeed(0, player.getSpeed().y);
+		}
 		
+		//Update all the game layers
 		for(GameLayer l : layers)
 			l.update(dt);
 	}	
