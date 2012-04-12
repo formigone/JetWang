@@ -80,7 +80,7 @@ public class PaintThread extends Thread{
 					Thread.sleep((long) sleepTime);
 				}
 				else {
-					//Log.d("TIMEOUT!", "Frame drawn too slow. Next frame dropped.");
+					Log.d("TIMEOUT!", "Frame drawn too slow. Next frame dropped.");
 				}
 			} catch (InterruptedException ex) {
 				Logger.getLogger(PaintThread.class.getName()).log(Level.SEVERE, null, ex);
