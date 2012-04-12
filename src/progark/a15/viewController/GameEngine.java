@@ -42,6 +42,11 @@ public class GameEngine {
 		layers.add(new GameLayer(true)); //Foreground layer (player, obstacles, enemies,)
 		layers.get(0).addSprite(SpriteFactory.getInstance().getMountains());
 		layers.get(2).addSprite(SpriteFactory.getInstance().getGround());
+		
+		//Make player
+		player=SpriteFactory.getInstance().getPlayer();
+		player.setPointListener(this);
+		layers.get(2).addSprite(player);
 	}
 	
 	/*
@@ -51,6 +56,12 @@ public class GameEngine {
 		//TODO: Randomly generate bonuses and obstacles?
 		//TODO: Obstacles and bonuses as a function of achieved height?
 		
+		//Player stops when hitting screen sides.
+		if(player.getPosition().left<0)
+			player.move(-player.getPosition().left, 0);
+		if(player.getPosition().right>this.screenSize.x)
+			player.move(screenSize.x-player.getPosition().right, 0);
+		
 		for(GameLayer l : layers)
 			l.update(dt);
 	}	
@@ -59,15 +70,21 @@ public class GameEngine {
 	 * Draw is synchronized. Called about as often as the update()
 	 */
 	public void draw(Canvas canvas) {
-//		//Player is below screen. Game over.
-//		if(player.getPosition().top>canvas.getClipBounds().bottom) {
-//			
-//		}
-//		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
-//		else if(player.getPosition().bottom>canvas.getClipBounds().centerY()) {
-//			//Camera might move the wrong way here (did not test) if it does, put a minus before the calculation below.
-//			canvas.getMatrix().postTranslate(0, player.getPosition().bottom-canvas.getClipBounds().centerY());			
-//		}
+		//Player is below screen. Game over.
+		if(player.getPosition().top>canvas.getClipBounds().bottom) {
+			
+		}
+		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
+		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
+			canvas.getClipBounds().offset(0, (int) (player.getPosition().bottom-canvas.getClipBounds().centerY()));
+			Log.d("CANVAS MOVE",canvas.getClipBounds().toShortString());
+			//Camera might move the wrong way here (did not test) if it does, put a minus before the calculation below.
+			
+			//canvas.translate(0, player.getPosition().bottom-canvas.getClipBounds().centerY());
+			//Move Layers to compensate
+			layers.get(0).move(0,canvas.getClipBounds().centerY()-player.getPosition().bottom);
+			layers.get(1).move(0,canvas.getClipBounds().centerY()-player.getPosition().bottom);
+		}
 		for(GameLayer l : layers)
 			l.draw(canvas);
 	}
@@ -76,11 +93,13 @@ public class GameEngine {
 	 * Touch handler sent from view. Only thing controlled in this view is the player.
 	 */
 	public void onTouchDown(MotionEvent event) {
+		Log.d("TOUCH","touchdown");
 		//On touch, calculate acceleration vector.
-		player.accelerate(screenSize.x/2-event.getHistoricalX(event.getHistorySize()-1),
+		player.accelerate(event.getHistoricalX(event.getHistorySize()-1)-screenSize.x/2,
 						  event.getHistoricalY(event.getHistorySize()-1)-screenSize.y);		
 	}
 	public void onTouchUp(MotionEvent event) {
+		Log.d("TOUCH","touchup");
 		//Player now starts falling again.
 		player.decelerate();
 	}

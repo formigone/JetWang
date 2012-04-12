@@ -55,5 +55,11 @@ public class GameLayer {
 			}
 		}
 	}
+	
+	public void move(float dx,float dy) {
+		for(Sprite s : sprites) {
+			s.move(dx, dy);
+		}
+	}
 
 }

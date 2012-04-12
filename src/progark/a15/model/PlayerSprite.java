@@ -5,12 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.FloatMath;
+import android.util.Log;
 
 public class PlayerSprite extends AbstractPhysSprite {
 	//Player settings
-	private int fuel=100;
-	private final int fuelMax=100;
-	private float gravity=5;
+	private int fuel=Integer.MAX_VALUE;
+	private final int fuelMax=Integer.MAX_VALUE;
+	private float gravity=0.0005f;
 	private boolean isBoosting=false;
 	//All sprites need a paint class to draw.
 	private Paint dummyPaint = new Paint();
@@ -23,16 +24,20 @@ public class PlayerSprite extends AbstractPhysSprite {
 	//Callback to game engine: update on points earned.
 	private GameEngine gEngine;
 	
-	public PlayerSprite(Bitmap left,Bitmap right,Bitmap center,SpriteSheet flame,GameEngine engine) {
+	public PlayerSprite(Bitmap left,Bitmap right,Bitmap center,SpriteSheet flame) {
 		this.pLeft=left;
 		this.pRight=right;
 		this.pCenter=center;
 		this.flame = new AnimatedSprite(flame);
-		this.gEngine=engine;
 		//Set sprite size
 		setSize(pCenter.getWidth(), pCenter.getHeight());
 		//Add gravity to player
 		setAcceleration(0, gravity);
+		this.setSpeed(0, 0);
+	}
+	
+	public void setPointListener(GameEngine g) {
+		this.gEngine = g;
 	}
 	
 	//Method called on touch to accelerate PlayerSprite. Takes a vector (x, y) and sets acceleration vector.
@@ -44,8 +49,11 @@ public class PlayerSprite extends AbstractPhysSprite {
 		 * yScl=maxAcc*sqrt(1/(1+x²/y²))
 		 */
 		isBoosting=true;
-		setAcceleration(maxAcc*FloatMath.sqrt(1/(1+(y*y)/(x*x))), 
-						maxAcc*FloatMath.sqrt(1/(1+(x*x)/(y*y)))+gravity);
+		setAcceleration(Math.signum(x)*maxAcc*FloatMath.sqrt(1/(1+(y*y)/(x*x))), 
+						-maxAcc*FloatMath.sqrt(1/(1+(x*x)/(y*y)))+gravity);
+		Log.d("NEWACC",this.getAcceleration().x+" x "+this.getAcceleration().y);
+		Log.d("NEWSPEED",this.getSpeed().x+" x "+this.getSpeed().y);
+		
 	}
 	public void decelerate() {
 		isBoosting=false;

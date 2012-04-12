@@ -33,7 +33,8 @@ public class SpriteFactory {
 										 R.drawable.backgroundstart,
 										 R.drawable.cloud128,
 										 R.drawable.flamesheet64,
-										 R.drawable.sprite128};
+										 R.drawable.sprite128,
+										 R.drawable.ground};
 	
 	/*
 	 * Run these prior to use! If both are set, the factory automatically starts preloading images.
@@ -71,6 +72,17 @@ public class SpriteFactory {
 		ObstacleSprite b = new ObstacleSprite(img);
 		b.setPosition(new RectF(0,screenDim.y-img.getHeight(),img.getWidth(),screenDim.y));
 		return b;
+	}
+	public PlayerSprite getPlayer() {
+		SpriteSheet flame = new SpriteSheet(3,2,0.7f,cachedImages.get(R.drawable.flamesheet64));
+		Bitmap img = cachedImages.get(R.drawable.sprite128);
+		PlayerSprite p = new PlayerSprite(
+				img,
+				img,
+				img,
+				flame);
+		p.setPosition(new RectF(screenDim.x/2,screenDim.y/2+20,screenDim.x/2+img.getWidth(),screenDim.y/2+20+img.getHeight()));
+		return p;
 	}
 	
 	

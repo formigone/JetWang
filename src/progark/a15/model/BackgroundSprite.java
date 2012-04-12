@@ -41,5 +41,10 @@ public class BackgroundSprite implements Sprite {
 	public RectF getPosition() {
 		return pos;
 	}
+	@Override
+	public void move(float dx, float dy) {
+		pos.offset(dx, dy);
+		
+	}
 
 }

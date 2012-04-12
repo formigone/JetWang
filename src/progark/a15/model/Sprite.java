@@ -10,5 +10,6 @@ public interface Sprite {
 	//All sprites have a position and size determined by a rectangle in space.
 	public void setPosition(RectF p);
 	public RectF getPosition();
+	public void move(float dx,float dy);
 	
 }

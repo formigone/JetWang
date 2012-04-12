@@ -25,7 +25,7 @@ public class SpriteSheet {
 	 * the bitmap is the actual sprite.
 	 */
 	
-	public SpriteSheet(int nFrames,int height,float step, Bitmap bmp) {
+	public SpriteSheet(int width,int height,float step, Bitmap bmp) {
 		this.height = height;
 		this.width = width;
 		this.step = step;

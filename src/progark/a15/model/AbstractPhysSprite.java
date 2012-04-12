@@ -2,6 +2,7 @@ package progark.a15.model;
 
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.util.Log;
 
 /*
  * AbstractSprite handles bounds and physics of a sprite.
@@ -11,7 +12,7 @@ public abstract class AbstractPhysSprite implements CollisionListener,Sprite {
 	private RectF position = new RectF(0,0,0,0);
 	private PointF speed = new PointF(0,0);
 	private PointF acceleration = new PointF(0,0);
-	protected final float maxAcc=10;	
+	protected final float maxAcc=0.0008f;	
 	
 	public void update(float dt) {
 		//Move object according to equation of motion: r=r0+vt+at²/2
@@ -19,8 +20,6 @@ public abstract class AbstractPhysSprite implements CollisionListener,Sprite {
 						speed.y*dt+acceleration.y*dt*dt/2);
 		//Accelerate velocity (integration) v=v0+a*dt
 		speed.offset(acceleration.x*dt, acceleration.y*dt);
-		
-		
 	}
 	
 	

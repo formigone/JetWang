@@ -21,7 +21,7 @@ public class PaintThread extends Thread{
 	//for consistent rendering
 	private float sleepTime;
 	//amount of time between frames (in seconds), optimally
-	private final float delay=0.7f;
+	private final float delay=40;
 
 	//state of game (Running or Paused).
 	int state = 1;
@@ -81,14 +81,13 @@ public class PaintThread extends Thread{
 			//actual time it took to update and render the game. This allows our game to render smoothly.
 			//This synch will fail miserably if CPU is too slow to render a frame in the allotted Delay time.
 			this.sleepTime = delay-((System.nanoTime()-beforeTime)/1000000L);
-
 			try {
 				//actual sleep code
 				if(sleepTime>0){
 					Thread.sleep((long) sleepTime);
 				}
 				else {
-					Log.d("TIMEOUT!", "Frame drawn too slow. Next frame dropped.");
+					//Log.d("TIMEOUT!", "Frame drawn too slow. Next frame dropped.");
 				}
 			} catch (InterruptedException ex) {
 				Logger.getLogger(PaintThread.class.getName()).log(Level.SEVERE, null, ex);
