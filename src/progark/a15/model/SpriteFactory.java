@@ -67,7 +67,7 @@ public class SpriteFactory {
 	}
 	
 	public ObstacleSprite getGround() {
-		Bitmap img = cachedImages.get(R.drawable.backgroundstart);
+		Bitmap img = cachedImages.get(R.drawable.ground);
 		ObstacleSprite b = new ObstacleSprite(img);
 		b.setPosition(new RectF(0,screenDim.y-img.getHeight(),img.getWidth(),screenDim.y));
 		return b;
