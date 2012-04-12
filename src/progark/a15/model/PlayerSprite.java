@@ -113,19 +113,19 @@ public class PlayerSprite extends AbstractPhysSprite {
 	
 	private void fixCollision(ObstacleSprite d) {
 		//All these set speed towards colliding entity to 0 and nudges the player a bit away. No bounce.
-		if((d.getPosition().right-getPosition().left<5)) { //Collided with obstacle on left side
+		if((d.getPosition().right-getPosition().left<10)) { //Collided with obstacle on left side
 			setSpeed(0,getSpeed().y);
 			move(d.getPosition().right-getPosition().left+1,0);
 		}
-		else if((getPosition().right-d.getPosition().left<5)) { //Collided with obstacle on right side
+		else if((getPosition().right-d.getPosition().left<10)) { //Collided with obstacle on right side
 			setSpeed(0,getSpeed().y);
 			move(d.getPosition().left-getPosition().right-1,0);
 		}
-		else if((getPosition().bottom-d.getPosition().top<5)) { //Landed on obstacle
+		else if((getPosition().bottom-d.getPosition().top<10)) { //Landed on obstacle
 			setSpeed(getSpeed().x,0);
 			move(0,d.getPosition().top-getPosition().bottom-1);
 		}
-		else if(d.getPosition().bottom-getPosition().top<5) { //Collided with obstacle bottom
+		else if(d.getPosition().bottom-getPosition().top<10) { //Collided with obstacle bottom
 			setSpeed(getSpeed().x,0);
 			move(0,d.getPosition().bottom-getPosition().top+1);
 		}
