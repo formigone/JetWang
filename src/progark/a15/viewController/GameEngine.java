@@ -53,6 +53,11 @@ public class GameEngine {
 		player.setPointListener(this);
 		layers.get(2).addSprite(player);
 		//Make some clouds. We'll make all at once. REMEMBER: Up is negative numbers!
+		/*
+		 * TODO: Precalculate all bonuses here!
+		 * Arrange them so that the bottommost ones (highest y-value) is added first! 
+		 * Layers will terminate sprite iteration at first sprite above screen bounds, for efficiency.
+		 */
 		for(int i=300;i>-9000;i-=20)
 			//Tweak math.random threshold to adjust number of clouds. smaller number->fewer clouds
 			if(Math.random()<0.2) {
@@ -103,9 +108,9 @@ public class GameEngine {
 			
 		}
 		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
-		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
+		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()/2) {
 			//Move all layers a nudge down!
-			float dy = canvas.getClipBounds().centerY()-player.getPosition().bottom;
+			float dy = canvas.getClipBounds().centerY()/2-player.getPosition().bottom;
 			//Increment height!
 			this.height+=dy;
 			//Background layer moves slower than the rest -> Parallax mapping.
