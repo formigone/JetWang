@@ -2,6 +2,7 @@ package progark.a15.model;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -51,8 +52,6 @@ public class SpriteSheet {
 	}
 	public void draw(Canvas canvas) {
 		canvas.drawBitmap(bmp, srcRect, dstRect, null);
-		Log.d("SRCRECT",srcRect.toShortString());
-		Log.d("DSTRECT",dstRect.toString());
 	}
 	
 	

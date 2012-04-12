@@ -78,7 +78,6 @@ public class PlayerSprite extends AbstractPhysSprite {
 	@Override
 	public void draw(Canvas c) {
 		//x acceleration is much less than y acceleration. Jetpack man accelerating straight up
-
 		if(Math.abs(getAcceleration().x/getAcceleration().y)<0.1) {
 			c.drawBitmap(pCenter, getPosition().left, getPosition().top, dummyPaint);
 			// TODO Add flame here
@@ -93,6 +92,10 @@ public class PlayerSprite extends AbstractPhysSprite {
 			//TODO add flame here
 			c.drawBitmap(pRight, getPosition().left, getPosition().top, dummyPaint);
 		}	
+		
+		//Set the position of the flame relative to the player!
+		flame.setPosition(getPosition().centerX()-flame.getSize().x/2,getPosition().bottom-5);
+		//Draw flame if player is boosting
 		if(isBoosting) flame.draw(c);
 		
 	}
@@ -100,7 +103,6 @@ public class PlayerSprite extends AbstractPhysSprite {
 		super.update(dt);
 		//Update the flame sprite!
 		flame.update(dt);
-		flame.setPosition(this.getPosition().centerX()-flame.getSize().x/2,this.getPosition().bottom);
 		
 		//Jetpack on. Decrease fuel. For simplicity, decrease is time elapsed. (adjust max fuel for game balance instead.)
 		if(isBoosting) {
