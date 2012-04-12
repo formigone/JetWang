@@ -48,11 +48,16 @@ public class GameLayer {
 			//Sprite has passed below game screen. Delete it.
 			if(s.getPosition().top>c.getClipBounds().bottom) {
 				sprites.remove(s);
+				//Since one sprite is removed, we have to iterate over again (Else we have no control over the list anymore.)
+				draw(c);
+				return;
 			}
 			//Don't draw sprites above screen clip
-			else if(s.getPosition().bottom>c.getClipBounds().top) {
+			if(s.getPosition().bottom>c.getClipBounds().top) {
 				s.draw(c);
 			}
+			//If one sprite is above screen clip, the rest is too
+			else { return; }
 		}
 	}
 	

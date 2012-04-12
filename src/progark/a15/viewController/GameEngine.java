@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import progark.a15.R;
+import progark.a15.model.BackgroundSprite;
 import progark.a15.model.GameLayer;
 import progark.a15.model.PlayerSprite;
 import progark.a15.model.SpriteFactory;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.Log;
@@ -27,12 +29,16 @@ public class GameEngine {
 	private int difficulty;
 	//Point counter. Defined by achieved height and bonuses picked up.
 	private int points=0;
+	//Height measuring
+	private float height=1;
+	//black painter below to clear the screen before the game is rendered Maybe remove this if background sprites covers all?
+	private Paint backPaint = new Paint();
 	
 	public void init(Resources resources,int difficulty) {
 		this.res = resources;
 		//Give spriteFactory access to the game resources
 		SpriteFactory.getInstance().setResources(resources);
-		
+
 		
 		this.difficulty=difficulty;
 	}
@@ -42,11 +48,21 @@ public class GameEngine {
 		layers.add(new GameLayer(true)); //Foreground layer (player, obstacles, enemies,)
 		layers.get(0).addSprite(SpriteFactory.getInstance().getMountains());
 		layers.get(2).addSprite(SpriteFactory.getInstance().getGround());
-		
 		//Make player
 		player=SpriteFactory.getInstance().getPlayer();
 		player.setPointListener(this);
 		layers.get(2).addSprite(player);
+		//Make some clouds. We'll make all at once. REMEMBER: Up is negative numbers!
+		for(int i=300;i>-9000;i-=20)
+			//Tweak math.random threshold to adjust number of clouds. smaller number->fewer clouds
+			if(Math.random()<0.2) {
+				BackgroundSprite cloud = SpriteFactory.getInstance().makeCloud();
+				cloud.move((float)(screenSize.x*Math.random()), i);
+				layers.get(1).addSprite(cloud);
+			}
+		
+		
+		
 	}
 	
 	/*
@@ -76,6 +92,12 @@ public class GameEngine {
 	 * Draw is synchronized. Called about as often as the update()
 	 */
 	public void draw(Canvas canvas) {
+		//Background color is function of achieved height. 
+		float function = 1-0.0001f*height <0 ? 0 : 1-0.0001f*height;
+		
+		
+		backPaint.setARGB(255, (int)(50*function), (int)(174*function), (int)(245*function));
+		canvas.drawRect(canvas.getClipBounds(), backPaint);
 		//Player is below screen. Game over.
 		if(player.getPosition().top>canvas.getClipBounds().bottom) {
 			
@@ -84,8 +106,10 @@ public class GameEngine {
 		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
 			//Move all layers a nudge down!
 			float dy = canvas.getClipBounds().centerY()-player.getPosition().bottom;
+			//Increment height!
+			this.height+=dy;
 			//Background layer moves slower than the rest -> Parallax mapping.
-			layers.get(0).move(0, dy*0.1f);
+			layers.get(0).move(0, dy*0.02f);
 			layers.get(1).move(0, dy);
 			layers.get(2).move(0, dy);
 			

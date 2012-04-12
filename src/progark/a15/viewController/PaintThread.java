@@ -15,7 +15,6 @@ public class PaintThread extends Thread{
 	private SurfaceHolder mSurfaceHolder;
 	private Handler mHandler;
 	private Context mContext;
-	private Paint backPaint;
 	GameEngine gEngine;
 
 	//for consistent rendering
@@ -34,10 +33,6 @@ public class PaintThread extends Thread{
 		mSurfaceHolder = surfaceHolder;
 		this.mHandler = handler;
 		this.mContext = context;
-
-		//black painter below to clear the screen before the game is rendered Maybe remove this if background sprites covers all?
-		backPaint = new Paint();
-		backPaint.setARGB(255, 50, 174, 245);
 
 		gEngine=gEngineS;
 	}
@@ -61,8 +56,6 @@ public class PaintThread extends Thread{
 				//lock canvas so nothing else can use it
 				c = mSurfaceHolder.lockCanvas(null);
 				synchronized (mSurfaceHolder) {
-					//clear the screen with the black painter.
-					c.drawRect(0, 0, c.getWidth(), c.getHeight(), backPaint);
 					//This is where we draw the game engine.
 					gEngine.draw(c);
 				}

@@ -85,6 +85,14 @@ public class SpriteFactory {
 		return p;
 	}
 	
+	public BackgroundSprite makeCloud() {
+		Bitmap img = cachedImages.get(R.drawable.cloud128);
+		BackgroundSprite cloud = new BackgroundSprite(img);
+		cloud.setPosition(new RectF(0,0,img.getWidth(),img.getHeight()));
+		return cloud;
+	}
+	
+	
 	
 	/*
 	 * TODO:
