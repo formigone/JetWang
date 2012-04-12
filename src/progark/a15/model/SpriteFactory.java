@@ -74,7 +74,7 @@ public class SpriteFactory {
 		return b;
 	}
 	public PlayerSprite getPlayer() {
-		SpriteSheet flame = new SpriteSheet(3,2,0.7f,cachedImages.get(R.drawable.flamesheet64));
+		SpriteSheet flame = new SpriteSheet(3,2,70,cachedImages.get(R.drawable.flamesheet64));
 		Bitmap img = cachedImages.get(R.drawable.sprite128);
 		PlayerSprite p = new PlayerSprite(
 				img,

@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 
 public class SpriteSheet {
 	private Bitmap bmp;
@@ -30,7 +31,8 @@ public class SpriteSheet {
 		this.width = width;
 		this.step = step;
 		this.bmp=bmp;
-		bmpSize=new Point(bmp.getWidth()/width,bmp.getHeight()/height);		
+		bmpSize=new Point(bmp.getWidth()/width,bmp.getHeight()/height);
+		dstRect.set(0, 0, bmpSize.x, bmpSize.y);
 	}
 	public void update(float dt) {
 		//Update frame counter
@@ -49,6 +51,8 @@ public class SpriteSheet {
 	}
 	public void draw(Canvas canvas) {
 		canvas.drawBitmap(bmp, srcRect, dstRect, null);
+		Log.d("SRCRECT",srcRect.toShortString());
+		Log.d("DSTRECT",dstRect.toString());
 	}
 	
 	
@@ -57,10 +61,11 @@ public class SpriteSheet {
 	}
 	
 	public int getHeight() { return height; }
-	public int hetWidth() { return width; }
+	public int getWidth() { return width; }
 	
 	
 	public void setPosition(RectF r) { dstRect.set(r); }
+	public void setPosition(float newLeft,float newTop) { dstRect.offsetTo(newLeft, newTop); }
 	public RectF getPosition() { return dstRect; }
 	public void move(float dx,float dy) { dstRect.offset(dx, dy); }
 		
