@@ -11,8 +11,7 @@ import android.util.Log;
 public abstract class AbstractPhysSprite implements CollisionListener,Sprite {
 	private RectF position = new RectF(0,0,0,0);
 	private PointF speed = new PointF(0,0);
-	private PointF acceleration = new PointF(0,0);
-	protected final float maxAcc=0.0008f;	
+	private PointF acceleration = new PointF(0,0);	
 	
 	public void update(float dt) {
 		//Move object according to equation of motion: r=r0+vt+at²/2

@@ -76,14 +76,14 @@ public class GameEngine {
 		}
 		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
 		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
-			canvas.getClipBounds().offset(0, (int) (player.getPosition().bottom-canvas.getClipBounds().centerY()));
-			Log.d("CANVAS MOVE",canvas.getClipBounds().toShortString());
-			//Camera might move the wrong way here (did not test) if it does, put a minus before the calculation below.
+			//Move all layers a nudge down!
+			float dy = canvas.getClipBounds().centerY()-player.getPosition().bottom;
+			//Background layer moves slower than the rest -> Parallax mapping.
+			layers.get(0).move(0, dy*0.1f);
+			layers.get(1).move(0, dy);
+			layers.get(2).move(0, dy);
 			
-			//canvas.translate(0, player.getPosition().bottom-canvas.getClipBounds().centerY());
 			//Move Layers to compensate
-			layers.get(0).move(0,canvas.getClipBounds().centerY()-player.getPosition().bottom);
-			layers.get(1).move(0,canvas.getClipBounds().centerY()-player.getPosition().bottom);
 		}
 		for(GameLayer l : layers)
 			l.draw(canvas);

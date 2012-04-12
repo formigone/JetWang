@@ -12,6 +12,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 	private int fuel=Integer.MAX_VALUE;
 	private final int fuelMax=Integer.MAX_VALUE;
 	private float gravity=0.0005f;
+	protected final float maxAcc=0.001f;
 	private boolean isBoosting=false;
 	//All sprites need a paint class to draw.
 	private Paint dummyPaint = new Paint();
@@ -110,20 +111,20 @@ public class PlayerSprite extends AbstractPhysSprite {
 	private void fixCollision(ObstacleSprite d) {
 		//All these set speed towards colliding entity to 0 and nudges the player a bit away. No bounce.
 		if((d.getPosition().right-getPosition().left<5)) { //Collided with obstacle on left side
-			setSpeed(0,getSpeed().y);
-			move(d.getPosition().right-getPosition().left,0);
+			setSpeed(0.02f,getSpeed().y);
+			move(d.getPosition().right-getPosition().left+3,0);
 		}
 		else if((getPosition().right-d.getPosition().left<5)) { //Collided with obstacle on right side
-			setSpeed(0,getSpeed().y);
-			move(d.getPosition().left-getPosition().right,0);
+			setSpeed(-0.02f,getSpeed().y);
+			move(d.getPosition().left-getPosition().right-3,0);
 		}
 		else if((getPosition().bottom-d.getPosition().top<5)) { //Landed on obstacle
-			setSpeed(getSpeed().x,0);
-			move(0,d.getPosition().top-getPosition().bottom);
+			setSpeed(getSpeed().x,-0.02f);
+			move(0,d.getPosition().top-getPosition().bottom-3);
 		}
 		else if(d.getPosition().bottom-getPosition().top<5) { //Collided with obstacle bottom
-			setSpeed(getSpeed().x,0);
-			move(0,d.getPosition().bottom-getPosition().top);
+			setSpeed(getSpeed().x,0.02f);
+			move(0,d.getPosition().bottom-getPosition().top+3);
 		}
 	}
 	private void collectSprite(CollectableSprite c) {
