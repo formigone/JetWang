@@ -125,8 +125,8 @@ public class GameEngine {
 	public void onTouchDown(MotionEvent event) {
 		Log.d("TOUCH","touchdown");
 		//On touch, calculate acceleration vector.
-		player.accelerate(event.getHistoricalX(event.getHistorySize()-1)-screenSize.x/2,
-						  event.getHistoricalY(event.getHistorySize()-1)-screenSize.y);		
+		player.accelerate(event.getX()-screenSize.x/2,
+						  event.getY()-screenSize.y);		
 	}
 	public void onTouchUp(MotionEvent event) {
 		Log.d("TOUCH","touchup");
