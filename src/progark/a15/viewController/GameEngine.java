@@ -113,6 +113,9 @@ public class GameEngine {
 			float dy = canvas.getClipBounds().centerY()/2-player.getPosition().bottom;
 			//Increment height!
 			this.height+=dy;
+			//Increment points?
+			this.addPoints((int)(dy*10));
+			
 			//Background layer moves slower than the rest -> Parallax mapping.
 			layers.get(0).move(0, dy*0.02f);
 			layers.get(1).move(0, dy);
