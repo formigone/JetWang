@@ -40,6 +40,7 @@ public class GameEngine {
 		layers.add(new GameLayer(false)); //Background layer 1
 		layers.add(new GameLayer(false)); //Background layer 2
 		layers.add(new GameLayer(true)); //Foreground layer (player, obstacles, enemies,)
+		layers.get(0).addSprite(SpriteFactory.getInstance().getMountains());
 	}
 	
 	/*
@@ -57,15 +58,15 @@ public class GameEngine {
 	 * Draw is synchronized. Called about as often as the update()
 	 */
 	public void draw(Canvas canvas) {
-		//Player is below screen. Game over.
-		if(player.getPosition().top>canvas.getClipBounds().bottom) {
-			
-		}
-		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
-		else if(player.getPosition().bottom>canvas.getClipBounds().centerY()) {
-			//Camera might move the wrong way here (did not test) if it does, put a minus before the calculation below.
-			canvas.getMatrix().postTranslate(0, player.getPosition().bottom-canvas.getClipBounds().centerY());			
-		}
+//		//Player is below screen. Game over.
+//		if(player.getPosition().top>canvas.getClipBounds().bottom) {
+//			
+//		}
+//		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
+//		else if(player.getPosition().bottom>canvas.getClipBounds().centerY()) {
+//			//Camera might move the wrong way here (did not test) if it does, put a minus before the calculation below.
+//			canvas.getMatrix().postTranslate(0, player.getPosition().bottom-canvas.getClipBounds().centerY());			
+//		}
 		for(GameLayer l : layers)
 			l.draw(canvas);
 	}
@@ -84,6 +85,7 @@ public class GameEngine {
 	}
 	
 	public void setScreenSize(int w, int h) {
+		Log.d("SCREENSIZE","Set to: "+w+" x "+h);
 		screenSize.set(w, h);
 		// Pass id of background image supposed to fill the screen here!
 		SpriteFactory.getInstance().setScalation(R.drawable.backgroundplain,w,h);

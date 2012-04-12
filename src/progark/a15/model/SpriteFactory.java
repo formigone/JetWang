@@ -1,15 +1,20 @@
 package progark.a15.model;
 
+import java.util.HashMap;
+
 import progark.a15.R;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.RectF;
 /*
  * Singleton factory for creating sprites.
  * MUST BE INITIALIZED BY PROVIDING SCALING PERCENTAGE AND IMAGE RESOURCE CLASS PRIOR TO USE!
  */
 import android.graphics.PointF;
+import android.util.Log;
 
 public class SpriteFactory {
 	//Singleton instance
@@ -17,23 +22,28 @@ public class SpriteFactory {
 	//Variables needing to be set prior to use
 	private PointF scalation= new PointF(-1,-1);
 	private Resources res;
-	//Input list of images to be cached here Format is as the example under with the launcher icon.
+	//Dimensions of screen
+	private Point screenDim = new Point(0,0);
+	//Hashmap storing image id->bitmap pairs
+	private HashMap<Integer,Bitmap> cachedImages = new HashMap<Integer,Bitmap>();
+	
+	//List of image ids usable
 	private final int[] cachedImgKeys = {R.drawable.backgroundmountain,
 										 R.drawable.backgroundplain,
 										 R.drawable.backgroundstart,
 										 R.drawable.cloud128,
 										 R.drawable.flamesheet64,
 										 R.drawable.sprite128};
-	//imageCache is synchronized with cachedImages: cachedImgKeys.key->imageCache.value
-	private Bitmap[] imageCache = new Bitmap[cachedImgKeys.length];
 	
 	/*
 	 * Run these prior to use! If both are set, the factory automatically starts preloading images.
 	 * SetScalation takes an image reference to an image supposed to fill the screen, and the real screen dimensions.
 	 */
 	public void setScalation(int reference,int width,int height) {
+		screenDim.set(width, height);
 		Bitmap screenFill = BitmapFactory.decodeResource(res, reference);
-		scalation.set(width/screenFill.getWidth(), height/screenFill.getHeight());
+		Log.d("SCREENFILL","Dims: "+screenFill.getWidth()+"x"+screenFill.getHeight());
+		scalation.set((float)width/screenFill.getWidth(), (float)height/screenFill.getHeight());
 		screenFill.recycle();
 		//Both values set. Start preloading
 		if(res!=null) preloadImages();
@@ -49,6 +59,19 @@ public class SpriteFactory {
 		return instance;
 	}
 	
+	public BackgroundSprite getMountains() {
+			Bitmap img = cachedImages.get(R.drawable.backgroundmountain);
+			BackgroundSprite b = new BackgroundSprite(img);
+			b.setPosition(new RectF(0,screenDim.y-img.getHeight(),img.getWidth(),screenDim.y));
+			return b;
+	}
+	public ObstacleSprite getGround() {
+		Bitmap img = cachedImages.get(R.drawable.);
+		BackgroundSprite b = new BackgroundSprite(img);
+		b.setPosition(new RectF(0,screenDim.y-img.getHeight(),img.getWidth(),screenDim.y));
+		return b;
+	}
+	
 	
 	/*
 	 * TODO:
@@ -62,14 +85,15 @@ public class SpriteFactory {
 	 */
 	private void preloadImages() {
 		//Preload in new thread so this doesn't fudge up the draw thread
-		new Thread(new Runnable() {
-			public void run() {
+		//new Thread(new Runnable() {
+		//	public void run() {
+				Log.d("PRELOAD","Scalation at "+scalation.x+"x"+scalation.y);
 				//Iterate over keys in defined images to be cached
 				for(int i=0;i<cachedImgKeys.length;i++) {
-					imageCache[i] = getBitmap(cachedImgKeys[i]);
+					cachedImages.put(cachedImgKeys[i], getBitmap(cachedImgKeys[i]));
 				}
-			}
-		}).start();
+		//	}
+		//}).start();
 	}
 	/*
 	 * Private helper method for creating Bitmap images for the cache (let's hope this fits in RAM). Outputs scaled images.
