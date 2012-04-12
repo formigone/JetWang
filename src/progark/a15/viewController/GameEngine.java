@@ -41,6 +41,7 @@ public class GameEngine {
 		layers.add(new GameLayer(false)); //Background layer 2
 		layers.add(new GameLayer(true)); //Foreground layer (player, obstacles, enemies,)
 		layers.get(0).addSprite(SpriteFactory.getInstance().getMountains());
+		layers.get(2).addSprite(SpriteFactory.getInstance().getGround());
 	}
 	
 	/*
