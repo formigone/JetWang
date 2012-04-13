@@ -34,7 +34,8 @@ public class SpriteFactory {
 										 R.drawable.cloud128,
 										 R.drawable.flamesheet64,
 										 R.drawable.sprite128,
-										 R.drawable.ground};
+										 R.drawable.ground,
+										 R.drawable.star64};
 	
 	/*
 	 * Run these prior to use! If both are set, the factory automatically starts preloading images.
@@ -90,6 +91,13 @@ public class SpriteFactory {
 		BackgroundSprite cloud = new BackgroundSprite(img);
 		cloud.setPosition(new RectF(0,0,img.getWidth(),img.getHeight()));
 		return cloud;
+	}
+	
+	public BackgroundSprite makeStar(){
+		Bitmap img = cachedImages.get(R.drawable.star64);
+		BackgroundSprite star = new BackgroundSprite(img);
+		star.setPosition(new RectF(0,0,img.getWidth(), img.getHeight()));
+		return star;
 	}
 	
 	
