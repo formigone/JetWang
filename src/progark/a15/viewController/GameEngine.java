@@ -58,17 +58,29 @@ public class GameEngine {
 		 * Arrange them so that the bottommost ones (highest y-value) is added first! 
 		 * Layers will terminate sprite iteration at first sprite above screen bounds, for efficiency.
 		 */
-		for(int i=300;i>-9000;i-=20)
+		for(int i=300;i>-9000;i-=20){
 			//Tweak math.random threshold to adjust number of clouds. smaller number->fewer clouds
 			if(Math.random()<0.2) {
 				BackgroundSprite cloud = SpriteFactory.getInstance().makeCloud();
 				cloud.move((float)(screenSize.x*Math.random()), i);
 				layers.get(1).addSprite(cloud);
 			}
+		}
+		
+		//Adding stars. All at once.
+		for(int i=-9000;i>-18000;i-=20){
+			//Tweak math.random threshold to adjust number of stars. smaller number->fewer stars
+			if(Math.random()<0.1) {
+				BackgroundSprite star = SpriteFactory.getInstance().makeStar();
+				star.move((float)(screenSize.x*Math.random()), i);
+				layers.get(1).addSprite(star);
+			}
+		}
+}
 		
 		
 		
-	}
+	
 	
 	/*
 	 * This is called every PaintThread.delay ms. (70ms atm)
