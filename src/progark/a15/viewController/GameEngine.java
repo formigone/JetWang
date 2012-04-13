@@ -117,7 +117,7 @@ public class GameEngine {
 			this.addPoints((int)(dy*10));
 			
 			//Background layer moves slower than the rest -> Parallax mapping.
-			layers.get(0).move(0, dy*0.02f);
+			layers.get(0).move(0, dy*0.08f);
 			layers.get(1).move(0, dy);
 			layers.get(2).move(0, dy);
 			
