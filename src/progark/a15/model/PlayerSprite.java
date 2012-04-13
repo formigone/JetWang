@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class PlayerSprite extends AbstractPhysSprite {
 	//Player settings
-	private int fuel=Integer.MAX_VALUE;
+	private int fuel=Integer.MAX_VALUE/2;
 	private final int fuelMax=Integer.MAX_VALUE;
 	private float gravity=0.0005f;
 	private final float maxAcc=0.001f;
@@ -112,6 +112,9 @@ public class PlayerSprite extends AbstractPhysSprite {
 				fuel=0;
 			}
 		}
+	}
+	public float getFuelLeftPerc() {
+		return (float)fuel/fuelMax;
 	}
 	
 	
