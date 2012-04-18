@@ -7,6 +7,7 @@ import progark.a15.R;
 import progark.a15.model.BackgroundSprite;
 import progark.a15.model.CollectableSprite;
 import progark.a15.model.GameLayer;
+import progark.a15.model.Globals;
 import progark.a15.model.PlayerSprite;
 import progark.a15.model.SpriteFactory;
 
@@ -74,7 +75,7 @@ public class GameEngine {
 		layers.get(0).addSprite(SpriteFactory.getInstance().getMountains());
 		layers.get(2).addSprite(SpriteFactory.getInstance().getGround());
 		//Make player
-		player=SpriteFactory.getInstance().getPlayer();
+		player=SpriteFactory.getInstance().getPlayer(Globals.getPlayerType());
 		player.setPointListener(this);
 		layers.get(2).addSprite(player);
 		//Make some clouds. We'll make all at once. REMEMBER: Up is negative numbers!
@@ -103,6 +104,7 @@ public class GameEngine {
 		}
 		
 		//Adding fuelcans. 
+		//TODO: Fuel cans _MUST_ be a function of achieved height, as they should become more sparse as one ascends.
 				for(int i=300;i>-18000;i-=20){
 					//Tweak math.random threshold to adjust number of stars. smaller number->fewer stars
 					if(Math.random()<0.01) {
