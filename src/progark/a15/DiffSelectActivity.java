@@ -26,7 +26,6 @@ public class DiffSelectActivity extends Activity {
         
         startButton.setOnClickListener(new View.OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				// Check if both difficulty and character are selected
 				int difficulty = -1;

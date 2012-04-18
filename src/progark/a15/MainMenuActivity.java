@@ -17,7 +17,6 @@ public class MainMenuActivity extends Activity {
         
         startButton.setOnClickListener(new View.OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				// Open the difficulty selection screen
 				Intent intent = new Intent(MainMenuActivity.this, DiffSelectActivity.class);
