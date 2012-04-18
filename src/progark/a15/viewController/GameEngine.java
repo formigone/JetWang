@@ -7,6 +7,7 @@ import progark.a15.R;
 import progark.a15.model.BackgroundSprite;
 import progark.a15.model.CollectableSprite;
 import progark.a15.model.GameLayer;
+import progark.a15.model.Globals;
 import progark.a15.model.PlayerSprite;
 import progark.a15.model.SpriteFactory;
 
@@ -74,7 +75,7 @@ public class GameEngine {
 		layers.get(0).addSprite(SpriteFactory.getInstance().getMountains());
 		layers.get(2).addSprite(SpriteFactory.getInstance().getGround());
 		//Make player
-		player=SpriteFactory.getInstance().getPlayer();
+		player=SpriteFactory.getInstance().getPlayer(Globals.getPlayerType());
 		player.setPointListener(this);
 		layers.get(2).addSprite(player);
 		//Make some clouds. We'll make all at once. REMEMBER: Up is negative numbers!
