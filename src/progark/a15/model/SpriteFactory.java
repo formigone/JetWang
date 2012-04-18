@@ -35,7 +35,8 @@ public class SpriteFactory {
 										 R.drawable.flamesheet64,
 										 R.drawable.sprite128,
 										 R.drawable.ground,
-										 R.drawable.star64};
+										 R.drawable.star64,
+										 R.drawable.sprite128_2};
 	
 	/*
 	 * Run these prior to use! If both are set, the factory automatically starts preloading images.
@@ -76,7 +77,7 @@ public class SpriteFactory {
 	}
 	public PlayerSprite getPlayer() {
 		SpriteSheet flame = new SpriteSheet(3,2,70,cachedImages.get(R.drawable.flamesheet64));
-		Bitmap img = cachedImages.get(R.drawable.sprite128);
+		Bitmap img = cachedImages.get(R.drawable.sprite128_2);
 		PlayerSprite p = new PlayerSprite(
 				img,
 				img,
