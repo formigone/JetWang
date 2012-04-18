@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import progark.a15.R;
 import progark.a15.model.BackgroundSprite;
+import progark.a15.model.CollectableSprite;
 import progark.a15.model.GameLayer;
 import progark.a15.model.PlayerSprite;
 import progark.a15.model.SpriteFactory;
@@ -100,6 +101,16 @@ public class GameEngine {
 				layers.get(1).addSprite(star);
 			}
 		}
+		
+		//Adding fuelcans. 
+				for(int i=300;i>-18000;i-=20){
+					//Tweak math.random threshold to adjust number of stars. smaller number->fewer stars
+					if(Math.random()<0.01) {
+						CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
+						fuelcan.move((float)(screenSize.x*Math.random()), i);
+						layers.get(2).addSprite(fuelcan);
+					}
+				}
 }
 		
 		
