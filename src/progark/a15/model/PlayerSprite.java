@@ -70,6 +70,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 		else if(c instanceof CollectableSprite ) {
 			//Sniff out CollectableSprite attributes and delete the sprite
 			collectSprite((CollectableSprite)c);
+			((CollectableSprite) c).remove();
 		}
 		else {
 			Log.d("COLLISION","WHAT? Collided with neither collectable nor obstacle?");

@@ -36,7 +36,9 @@ public class SpriteFactory {
 										 R.drawable.sprite128,
 										 R.drawable.ground,
 										 R.drawable.star64,
-										 R.drawable.sprite128_2};
+										 R.drawable.sprite128_2,
+										 R.drawable.fuelcan64
+										 };
 	
 	/*
 	 * Run these prior to use! If both are set, the factory automatically starts preloading images.
@@ -99,6 +101,13 @@ public class SpriteFactory {
 		BackgroundSprite star = new BackgroundSprite(img);
 		star.setPosition(new RectF(0,0,img.getWidth(), img.getHeight()));
 		return star;
+	}
+	
+	public CollectableSprite makeFuel(){
+		Bitmap img = cachedImages.get(R.drawable.fuelcan64);
+		CollectableSprite fuelcan = new CollectableSprite(img, BonusType.FUEL_ADD);
+		fuelcan.setPosition(new RectF(0,0,img.getWidth(),img.getHeight()));
+		return fuelcan;
 	}
 	
 	

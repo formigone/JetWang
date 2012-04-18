@@ -12,6 +12,7 @@ public class CollectableSprite extends AbstractPhysSprite {
 	private static Paint dummyPaint = new Paint();
 	private Bitmap image;
 	private BonusType type;
+	private boolean usedUp = false;
 	public CollectableSprite(Bitmap img,BonusType b) {
 		image=img;
 		type=b;
@@ -22,9 +23,19 @@ public class CollectableSprite extends AbstractPhysSprite {
 	public void collided(CollisionListener c) {}
 
 	public void draw(Canvas c) {
-		c.drawBitmap(image, getPosition().left, getPosition().top, dummyPaint);	
+		if(!usedUp){
+		c.drawBitmap(image, getPosition().left, getPosition().top, dummyPaint);
+		}
 	}
 	public BonusType getType() { return type; }
+	
+	public void remove(){
+		if(!usedUp){
+			usedUp = true;
+			this.setSize(0,0);
+			
+		}
+	}
 	
 	
 }
