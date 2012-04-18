@@ -103,7 +103,7 @@ public class GameEngine {
 			}
 		}
 		
-		//Adding fuelcans. 
+		//Adding fuelcans.
 		//TODO: Fuel cans _MUST_ be a function of achieved height, as they should become more sparse as one ascends.
 				for(int i=300;i>-18000;i-=20){
 					//Tweak math.random threshold to adjust number of stars. smaller number->fewer stars
