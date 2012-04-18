@@ -11,8 +11,9 @@ public class PlayerSprite extends AbstractPhysSprite {
 	//Player settings
 	private int fuel=Integer.MAX_VALUE/2;
 	private final int fuelMax=Integer.MAX_VALUE;
-	private float gravity=0.005f;   //FIXME Original: 0.0005f;
-	private final float maxAcc=0.01f; //FIXME Original: 0.001f;
+	private float gravity=0.002f;   //FIXME Original: 0.0005f;
+	private final float maxAcc=0.005f; //FIXME Original: 0.001f;
+	private final float maxSpeed = 1.0f;
 	private boolean isBoosting=false;
 	//All sprites need a paint class to draw.
 	private Paint dummyPaint = new Paint();
@@ -50,6 +51,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 		 * yScl=maxAcc*sqrt(1/(1+x²/y²))
 		 */
 		isBoosting=true;
+		
 		setAcceleration(Math.signum(x)*maxAcc*FloatMath.sqrt(1/(1+(y*y)/(x*x))), 
 						-maxAcc*FloatMath.sqrt(1/(1+(x*x)/(y*y)))+gravity);
 		Log.d("NEWACC",this.getAcceleration().x+" x "+this.getAcceleration().y);
@@ -103,6 +105,19 @@ public class PlayerSprite extends AbstractPhysSprite {
 		super.update(dt);
 		//Update the flame sprite!
 		flame.update(dt);
+		
+		//Sets a vertical speed limit. Halts acceleration and sets speed if reached.
+		if (Math.abs(getSpeed().y) >= maxSpeed)
+		{
+			setAcceleration(getAcceleration().x, 0);
+			setSpeed(getSpeed().x, Math.signum(getSpeed().y)*maxSpeed);
+		}
+		//Sets a horizontal speed limit. Halts acceleration and sets speed if reached.
+		if (Math.abs(getSpeed().x) >= maxSpeed/4)
+		{
+			setAcceleration(0, getAcceleration().y);
+			setSpeed( Math.signum(getSpeed().x)*maxSpeed/4, getSpeed().y);
+		}
 		
 		//Jetpack on. Decrease fuel. For simplicity, decrease is time elapsed. (adjust max fuel for game balance instead.)
 		if(isBoosting) {

@@ -123,7 +123,7 @@ public class GameEngine {
 	public void update(float dt) {
 		//TODO: Randomly generate bonuses and obstacles?
 		//TODO: Obstacles and bonuses as a function of achieved height?
-		
+				
 		//Player stops when hitting screen sides.
 		if(player.getPosition().left<0) {
 			player.move(-player.getPosition().left+1, 0);
@@ -155,9 +155,9 @@ public class GameEngine {
 			
 		}
 		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
-		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()/2) {
+		else if(player.getPosition().top<canvas.getClipBounds().centerY()/2) {
 			//Move all layers a nudge down!
-			float dy = canvas.getClipBounds().centerY()/2-player.getPosition().bottom;
+			float dy = canvas.getClipBounds().centerY()/2-player.getPosition().top;
 			//Increment height!
 			this.height+=dy;
 			//Increment points?
