@@ -48,8 +48,7 @@ public class GameEngine {
 	private Paint pointsPaint2;
 	
 	
-	public void init(Resources resources,int difficulty,Context context) {
-		this.context = context;
+	public void init(Resources resources,int difficulty) {
 		this.res = resources;
 		//Give spriteFactory access to the game resources
 		SpriteFactory.getInstance().setResources(resources);

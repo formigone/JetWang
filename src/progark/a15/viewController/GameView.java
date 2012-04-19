@@ -54,7 +54,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		super.onSizeChanged(w, h, oldw, oldh);
 		if(w != 0 && h != 0) {
 			//Screen size known! Initialize engine! Set difficulty TODO: Get difficulty selection
-			gEngine.init(context.getResources(),Globals.getDifficulty(),context);
+			gEngine.init(context.getResources(),Globals.getDifficulty());
 			gEngine.setScreenSize(w,h);
 		}
 
