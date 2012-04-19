@@ -10,9 +10,9 @@ import android.util.Log;
 
 
 public class GameLayer {
-	private LinkedList<Sprite> sprites = new LinkedList<Sprite>();
-	
-	
+	private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+
+
 	//Does this layer check for collision?
 	private boolean isPhysical;
 	public GameLayer(boolean isPhys) {
@@ -20,31 +20,21 @@ public class GameLayer {
 	}
 
 	public void addSprite(Sprite s) {
-		sprites.addLast(s);
+		sprites.add(s);
 	}
 	public void removeSprite(Sprite s) {
-		if(sprites.getFirst()==s) sprites.removeFirst();
-		else sprites.remove(s);
+		sprites.remove(s);
 	}
 
 	//Update all sprites and check for collisions
 	public void update(float dt) {
 		for(Sprite s1 : sprites) {
 			s1.update(dt);
-			//Uncomment code beneath if only player sprite can collide with other objects. Makes this algorithm O(n) instead of O(n²)
-			//if(s1 instanceof PlayerSprite)
-
-			if(isPhysical && s1 instanceof CollisionListener)
-				for(Sprite s2 : sprites)
-					//Collision detected! Activate casting hell!
-					if(RectF.intersects(s1.getPosition(),s2.getPosition()) && s2 instanceof CollisionListener && s2 != s1) {
-						((CollisionListener) s1).collided((CollisionListener) s2);
-						//Comment out line below if only player collides with other objects.
-						((CollisionListener) s2).collided((CollisionListener) s1);
-					}
 		}
-	}
-	
+		if(isPhysical)
+			checkCollision();
+	}	
+
 	/*
 	 * Passes draw cals to all sprites Checking of bounds might become a bottleneck! TODO: profile the draw stack.
 	 */
@@ -61,15 +51,36 @@ public class GameLayer {
 			if(s.getPosition().bottom>c.getClipBounds().top) {
 				s.draw(c);
 			}
-//			If one sprite is above screen clip, the rest is too
+			//			If one sprite is above screen clip, the rest is too
 			else { 	return;	}
 		}
 	}
-	
+
 	public void move(float dx,float dy) {
 		for(Sprite s : sprites) {
 			s.move(dx, dy);
 		}
 	}
 
+	private void checkCollision() {
+
+		for(Sprite s1 : sprites) {
+			//Uncomment code beneath if only player sprite can collide with other objects. Makes this algorithm O(n) instead of O(n²)
+			if(s1 instanceof PlayerSprite) {
+				for(Sprite s2 : sprites) {
+					//OPTIMIZATION LINE: if sprite is above player, none of the other sprites collide. Return
+					if(s1.getPosition().top>s2.getPosition().bottom) return;
+					//Collision detected! Activate casting hell!
+					if(s2 instanceof CollisionListener && s2 != s1 && RectF.intersects(s1.getPosition(),s2.getPosition())) {
+						//Notify both sprites of collision
+						Log.d("COLLIDED","WEE!");
+						((CollisionListener) s1).collided((CollisionListener) s2);
+						((CollisionListener) s2).collided((CollisionListener) s1);
+					}
+				}
+				//PlayerSprite found. No need to iterate anymore. Return
+				return;
+			}
+		}
+	}
 }

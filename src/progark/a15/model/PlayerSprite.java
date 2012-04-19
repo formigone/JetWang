@@ -11,9 +11,9 @@ public class PlayerSprite extends AbstractPhysSprite {
 	//Player settings
 	private int fuel=15000;//Integer.MAX_VALUE/2;
 	private final int fuelMax=20000;//Integer.MAX_VALUE;
-	private float gravity=0.002f;   //FIXME Original: 0.0005f;
-	private final float maxAcc=0.005f*SpriteFactory.getInstance().getScalation().y;; //FIXME Original: 0.001f;
-	private final float maxSpeed = 1.0f*SpriteFactory.getInstance().getScalation().y;;
+	private float gravity=0.002f*SpriteFactory.getInstance().getScalation().y;   //FIXME Original: 0.0005f;
+	private final float maxAcc=0.005f*SpriteFactory.getInstance().getScalation().y; //FIXME Original: 0.001f;
+	private final float maxSpeed = 1.0f*SpriteFactory.getInstance().getScalation().y;
 	private boolean isBoosting=false;
 	//All sprites need a paint class to draw.
 	private Paint dummyPaint = new Paint();
