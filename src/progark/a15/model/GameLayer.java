@@ -28,11 +28,15 @@ public class GameLayer {
 
 	//Update all sprites and check for collisions
 	public void update(float dt) {
-		for(Sprite s1 : sprites) {
-			s1.update(dt);
-		}
 		if(isPhysical)
 			checkCollision();
+		
+		for(Sprite s1 : sprites) {
+			s1.update(dt);
+			//OPTIMIZATION LINE: This is a hack claiming that all sprites outside the screen do not need to be redrawn!
+			if(s1.getPosition().bottom<0) return;
+			
+		}
 	}	
 
 	/*
