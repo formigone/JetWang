@@ -185,8 +185,8 @@ public class GameEngine {
 			float dy = canvas.getClipBounds().centerY()-player.getPosition().bottom;
 			//Increment height!
 			this.height+=dy;
-			//Increment points?
-			this.addPoints((int)(dy*10));
+			//Increment points? Points are given based on difficulty level. Higher difficulty level = harder&&more rewarding.
+			this.addPoints((int)(dy*10*difficulty));
 			
 			//Background layer moves slower than the rest -> Parallax mapping.
 			layers.get(0).move(0, dy*0.08f);
