@@ -20,6 +20,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -56,9 +57,10 @@ public class GameEngine {
 		fuelFill.setStyle(Style.FILL);
 		
 		pointsPaint.setAntiAlias(true);
-		pointsPaint.setStrokeWidth(21*SpriteFactory.getInstance().getScalation().y);
-		pointsPaint.setColor(Color.YELLOW);
+		pointsPaint.setStrokeWidth(7*SpriteFactory.getInstance().getScalation().y);
+		pointsPaint.setColor(Color.argb(255, 236, 201, 39));
 		pointsPaint.setStyle(Style.FILL);
+		pointsPaint.setTypeface(Typeface.SERIF);
 		pointsPaint2 = new Paint(pointsPaint);
 		pointsPaint2.setColor(Color.BLACK);
 		pointsPaint2.setStyle(Style.STROKE);
@@ -202,7 +204,7 @@ public class GameEngine {
 		fuelFillBg.draw(canvas);
 		//Get scalation for terseness
 		PointF scl = SpriteFactory.getInstance().getScalation();
-		canvas.drawRect((int)(20*scl.x),(int)(50*scl.y), (int)(player.getFuelLeftPerc()*700*scl.x), (int)(100*scl.y), fuelFill);
+		canvas.drawRect((int)(30*scl.x),(int)(60*scl.y), (int)(player.getFuelLeftPerc()*690*scl.x), (int)(90*scl.y), fuelFill);
 		canvas.drawText(Integer.toString(points), 570*scl.x, 40*scl.y, pointsPaint2);
 		canvas.drawText(Integer.toString(points), 570*scl.x, 40*scl.y, pointsPaint);
 	}
