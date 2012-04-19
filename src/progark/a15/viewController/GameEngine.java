@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import progark.a15.R;
 import progark.a15.model.BackgroundSprite;
+import progark.a15.model.BonusType;
 import progark.a15.model.CollectableSprite;
 import progark.a15.model.GameLayer;
 import progark.a15.model.Globals;
@@ -105,15 +106,55 @@ public class GameEngine {
 		
 		//Adding fuelcans.
 		//TODO: Fuel cans _MUST_ be a function of achieved height, as they should become more sparse as one ascends.
-				for(int i=300;i>-18000;i-=20){
+				for(int i=300;i>-10000;i-=20){
 					//Tweak math.random threshold to adjust number of stars. smaller number->fewer stars
-					if(Math.random()<0.01) {
+					if(Math.random()<0.03) {
 						CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
 						fuelcan.move((float)(screenSize.x*Math.random()), i);
 						layers.get(2).addSprite(fuelcan);
 					}
 				}
-}
+	}
+	
+	private int nextLevel = 0;
+		
+	/**
+	 * Generate new fuel cans as altitude increases
+	 */
+	public void generateFuel()
+	{
+		//heightLevel = roundInteger((int)height, 10000);
+		int heightLevel = (int)height/5000;
+		if (heightLevel == nextLevel)
+		{
+			for (int i=(int)height+5000; i>-(int)height+10000; i-=100)
+			{
+				if (Math.random() < 0.2)
+				{
+					CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
+					fuelcan.move((float)(screenSize.x*Math.random()), i);
+					layers.get(2).addSprite(fuelcan);
+					Log.e("FUEL", "HEEEEEEEEEEEEEEEEEER");
+				}
+			}
+			nextLevel++;
+			Log.i("LEVEL", "Level "+nextLevel+" reached");
+		}
+	}
+	
+	/**
+	 * Rounds the number to be a factor of a given number
+	 * @param number
+	 * @param round
+	 * @return
+	 */
+	public int roundInteger(int number, int factor)
+	{
+		int temp = number*factor;
+		temp = temp+(factor/2);
+		temp = temp/factor;
+		return temp*factor;		
+	}
 		
 		
 		
@@ -125,16 +166,18 @@ public class GameEngine {
 	public void update(float dt) {
 		//TODO: Randomly generate bonuses and obstacles?
 		//TODO: Obstacles and bonuses as a function of achieved height?
-				
+		generateFuel();		
 		//Player stops when hitting screen sides.
 		if(player.getPosition().left<0) {
 			player.move(-player.getPosition().left+1, 0);
-			player.setSpeed(0, player.getSpeed().y);
+			player.setSpeed(-player.getSpeed().x, player.getSpeed().y);
+			player.setAcceleration(0, player.getAcceleration().y);
 		}
 
 		if(player.getPosition().right>this.screenSize.x) {
 			player.move(screenSize.x-player.getPosition().right-1, 0);
-			player.setSpeed(0, player.getSpeed().y);
+			player.setSpeed(-player.getSpeed().x, player.getSpeed().y);
+			player.setAcceleration(0, player.getAcceleration().y);
 		}
 		
 		//Update all the game layers
@@ -154,6 +197,9 @@ public class GameEngine {
 		canvas.drawRect(canvas.getClipBounds(), backPaint);
 		//Player is below screen. Game over.
 		if(player.getPosition().top>canvas.getClipBounds().bottom) {
+			
+			player.setSpeed(0, 0);
+			player.setAcceleration(0, 0);
 			
 		}
 		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
@@ -178,7 +224,7 @@ public class GameEngine {
 		/*
 		 * Draw some HUD
 		 */
-		Log.d("FUEL",player.getFuelLeftPerc()+"");
+		//FIXME  fjerner for ordens skyld//  Log.d("FUEL",player.getFuelLeftPerc()+"");
 		
 		canvas.drawRect(10, 10, screenSize.x/2, 30, fuelFrame);
 		canvas.drawRect(11, 11, (float)player.getFuelLeftPerc()*screenSize.x/2-2, 29, fuelFill);

@@ -9,8 +9,8 @@ import android.util.Log;
 
 public class PlayerSprite extends AbstractPhysSprite {
 	//Player settings
-	private int fuel=Integer.MAX_VALUE/2;
-	private final int fuelMax=Integer.MAX_VALUE;
+	private int fuel=15000;//Integer.MAX_VALUE/2;
+	private final int fuelMax=20000;//Integer.MAX_VALUE;
 	private float gravity=0.002f;   //FIXME Original: 0.0005f;
 	private final float maxAcc=0.005f; //FIXME Original: 0.001f;
 	private final float maxSpeed = 1.0f;
@@ -60,7 +60,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 	}
 	public void decelerate() {
 		isBoosting=false;
-		setAcceleration(0,gravity);
+		setAcceleration(0, gravity);
 	}
 	
 	public void collided(CollisionListener c) {
@@ -113,7 +113,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 			setSpeed(getSpeed().x, Math.signum(getSpeed().y)*maxSpeed);
 		}
 		//Sets a horizontal speed limit. Halts acceleration and sets speed if reached.
-		if (Math.abs(getSpeed().x) >= maxSpeed/4)
+		if (Math.abs(getSpeed().x) >= maxSpeed/3)
 		{
 			setAcceleration(0, getAcceleration().y);
 			setSpeed( Math.signum(getSpeed().x)*maxSpeed/4, getSpeed().y);

@@ -34,5 +34,4 @@ public abstract class AbstractPhysSprite implements CollisionListener,Sprite {
 	public void setAcceleration(float x, float y) { acceleration.set(x, y); }
 	public PointF getAcceleration() { return acceleration; }
 	
-	
 }

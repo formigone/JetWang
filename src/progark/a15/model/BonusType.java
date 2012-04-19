@@ -7,10 +7,11 @@ package progark.a15.model;
  * Magnitude is a concrete number which relates to different things depending on the type of bonus.
  */
 public enum BonusType {
-	FUEL_ADD(10, 7, 5),
+	FUEL_ADD(5000, 3000, 1500),//10, 7, 5),
 	FUEL_FILL(100, 75, 50),
 	BONUSPOINT_SMALL(100, 200, 300),
-	BONUSPOINT_BIG(500, 700, 1000);
+	BONUSPOINT_BIG(500, 700, 1000),
+	BONUS_OCCURRENCE(3, 2, 1);
 	
 	private final int mag_e,mag_m,mag_h;
 	private BonusType(int mag_e, int mag_m, int mag_h) {

@@ -1,5 +1,6 @@
 package progark.a15.viewController;
 
+import progark.a15.model.Globals;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -53,7 +54,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		super.onSizeChanged(w, h, oldw, oldh);
 		if(w != 0 && h != 0) {
 			//Screen size known! Initialize engine! Set difficulty TODO: Get difficulty selection
-			gEngine.init(context.getResources(),0);
+			gEngine.init(context.getResources(),Globals.getDifficulty());
 			gEngine.setScreenSize(w,h);
 		}
 

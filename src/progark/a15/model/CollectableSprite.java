@@ -33,7 +33,8 @@ public class CollectableSprite extends AbstractPhysSprite {
 		if(!usedUp){
 			usedUp = true;
 			this.setSize(0,0);
-			
+			this.move(-1000, 0);
+						
 		}
 	}
 	
