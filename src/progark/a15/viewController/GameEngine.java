@@ -12,6 +12,7 @@ import progark.a15.model.Globals;
 import progark.a15.model.PlayerSprite;
 import progark.a15.model.SpriteFactory;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -24,6 +25,7 @@ import android.view.MotionEvent;
 
 public class GameEngine {
 	private Resources res;
+	private Context context;
 	//Game layers
 	private ArrayList<GameLayer> layers = new ArrayList<GameLayer>();
 	//Player
@@ -46,7 +48,8 @@ public class GameEngine {
 	private Paint pointsPaint2;
 	
 	
-	public void init(Resources resources,int difficulty) {
+	public void init(Resources resources,int difficulty,Context context) {
+		this.context = context;
 		this.res = resources;
 		//Give spriteFactory access to the game resources
 		SpriteFactory.getInstance().setResources(resources);
