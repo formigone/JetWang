@@ -62,6 +62,7 @@ public class DiffSelectActivity extends Activity {
 					Globals.setPlayerType(playerType);
 					
 					Intent intent = new Intent(DiffSelectActivity.this, GameActivity.class);
+					intent.putExtra("difficulty", difficulty);
 					DiffSelectActivity.this.startActivity(intent);
 				}
 			}

@@ -45,10 +45,9 @@ public class GameEngine {
 	private Paint fuelFrame = new Paint();
 	private Paint fuelFill = new Paint();
 	private Paint pointsPaint = new Paint();
-	private Paint pointsPaint2;
+	private Paint pointsPaint2;	
 	
-	
-	public void init(Resources resources,int difficulty) {
+	public void init(Resources resources) {
 		this.res = resources;
 		//Give spriteFactory access to the game resources
 		SpriteFactory.getInstance().setResources(resources);
@@ -70,6 +69,10 @@ public class GameEngine {
 		pointsPaint2.setStyle(Style.STROKE);
 		
 	}
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
+	}
+	
 	public void initGame() {
 		layers.add(new GameLayer(false)); //Background layer 1
 		layers.add(new GameLayer(false)); //Background layer 2
