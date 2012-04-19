@@ -57,7 +57,6 @@ public class GameEngine {
 		fuelFrame.setColor(Color.BLACK);
 		
 		fuelFill.setStyle(Style.FILL);
-		fuelFill.setColor(Color.GREEN);
 		
 		pointsPaint.setAntiAlias(true);
 		pointsPaint.setStrokeWidth(1);
@@ -164,6 +163,7 @@ public class GameEngine {
 	 * This is called every PaintThread.delay ms. (70ms atm)
 	 */
 	public void update(float dt) {
+		fuelFill.setARGB(255, (int)(255*(1-player.getFuelLeftPerc())), (int)(255*player.getFuelLeftPerc()), 0);
 		//generateFuel();		
 		//Player stops when hitting screen sides.
 		if(player.getPosition().left<0) {
