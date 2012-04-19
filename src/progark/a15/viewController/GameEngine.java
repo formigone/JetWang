@@ -113,7 +113,7 @@ public class GameEngine {
 				for(int i=300;i>-18000;i-=20){
 					//Tweak math.random threshold to adjust number of fuel cans. smaller number->fewer fuel cans
 					if(Math.random()<(0.1+i/180000)*BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)) {
-						if(Math.random()>0.1){
+						if(Math.random()>0.3/BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)){
 						CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
 						fuelcan.move((float)(screenSize.x*Math.random()), i);
 						layers.get(2).addSprite(fuelcan);
@@ -213,9 +213,9 @@ public class GameEngine {
 			
 		}
 		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
-		else if(player.getPosition().top<canvas.getClipBounds().centerY()/2) {
+		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
 			//Move all layers a nudge down!
-			float dy = canvas.getClipBounds().centerY()/2-player.getPosition().top;
+			float dy = canvas.getClipBounds().centerY()-player.getPosition().bottom;
 			//Increment height!
 			this.height+=dy;
 			//Increment points?

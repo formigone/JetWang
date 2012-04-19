@@ -11,6 +11,6 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         GameView gV = (GameView) this.findViewById(R.id.gameView);
-        gV.setDifficulty(savedInstanceState.getInt("difficulty"));
+        gV.setDifficulty(getIntent().getExtras().getInt("difficulty"));
     }
 }
