@@ -83,13 +83,8 @@ public class SpriteFactory {
 	}
 	public PlayerSprite getPlayer(int playerType) {
 		SpriteSheet flame = new SpriteSheet(3,2,70,cachedImages.get(R.drawable.flamesheet64));
-		
 		// Player selection
-		//Bitmap img = (playerType == PlayerType.PLAYER_GREEN) ? cachedImages.get(R.drawable.sprite128) : cachedImages.get(R.drawable.sprite128_2);
-		
-		Bitmap img = null;
-		
-		System.out.println("playerType: " + playerType);
+		Bitmap img;
 		
 		// Player selection
 		if (playerType == 0) {

@@ -15,12 +15,8 @@ public class GameActivity extends Activity {
         setContentView(R.layout.main);
         
         GameView gV = (GameView) this.findViewById(R.id.gameView);
-
-        Bundle gameSettings = new Bundle();
-        gameSettings.putInt("difficulty", getIntent().getExtras().getInt("difficulty"));
-        gameSettings.putInt("playerType", getIntent().getExtras().getInt("playerType"));
         
-        gV.setGameSettings(gameSettings);
+        gV.setGameSettings(getIntent().getExtras());
         
     }
 }

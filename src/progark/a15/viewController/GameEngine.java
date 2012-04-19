@@ -64,7 +64,6 @@ public class GameEngine {
 		pointsPaint2 = new Paint(pointsPaint);
 		pointsPaint2.setColor(Color.BLACK);
 		pointsPaint2.setStyle(Style.STROKE);
-		initGame();
 	}
 	
 	public void setDifficulty(int difficulty) {
@@ -75,6 +74,7 @@ public class GameEngine {
 	public void setGameSettings(Bundle gameSettings) {
 		this.difficulty = gameSettings.getInt("difficulty");
 		this.playerType = gameSettings.getInt("playerType");
+		initGame();
 	}
 	
 	// Used to detect which character should be drawn on screen
