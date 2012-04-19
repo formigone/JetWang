@@ -25,14 +25,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 public class GameEngine {
-	private Resources res;
-	private Context context;
 	//Game layers
 	private ArrayList<GameLayer> layers = new ArrayList<GameLayer>();
 	//Player
 	private PlayerSprite player;
 	//Screen size
-	private Point screenSize = new Point(0,0);
+	private Point screenSize;
 	//Difficulty set
 	private int difficulty;
 	//Point counter. Defined by achieved height and bonuses picked up.
@@ -52,21 +50,19 @@ public class GameEngine {
 	// PlayerType
 	private int playerType; 
 	
-	public void init(Resources resources) {
-		this.res = resources;
-		//Give spriteFactory access to the game resources
-		SpriteFactory.getInstance().setResources(resources);
-		
+	public GameEngine() {
+		//Fetch screen dimensions from sprite factory
+		this.screenSize=SpriteFactory.getInstance().getScreenDims();
 		fuelFill.setStyle(Style.FILL);
 		
 		pointsPaint.setAntiAlias(true);
-		pointsPaint.setStrokeWidth(7);
+		pointsPaint.setStrokeWidth(21*SpriteFactory.getInstance().getScalation().y);
 		pointsPaint.setColor(Color.YELLOW);
 		pointsPaint.setStyle(Style.FILL);
 		pointsPaint2 = new Paint(pointsPaint);
 		pointsPaint2.setColor(Color.BLACK);
 		pointsPaint2.setStyle(Style.STROKE);
-		
+		initGame();
 	}
 	
 	public void setDifficulty(int difficulty) {
@@ -225,21 +221,10 @@ public class GameEngine {
 		player.decelerate();
 	}
 	
-	public void setScreenSize(int w, int h) {
-		Log.d("SCREENSIZE","Set to: "+w+" x "+h);
-		screenSize.set(w, h);
-		// Pass id of background image supposed to fill the screen here!
-		SpriteFactory.getInstance().setScalation(R.drawable.backgroundplain,w,h);
-		//All resource initalization is now complete. Make game!
-		this.initGame();
-	}
-	
 	//Generic method for adding points
 	public void addPoints(int points) {
 		this.points+=points;
 	}
 	//PlayerSprite needs to check difficulty to calculate magnitude of bonuses collected.
 	public int getDifficulty() { return difficulty; }
-	
-	
 }

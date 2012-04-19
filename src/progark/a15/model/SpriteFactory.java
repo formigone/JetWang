@@ -49,9 +49,11 @@ public class SpriteFactory {
 	public void setScalation(int reference,int width,int height) {
 		screenDim.set(width, height);
 		Bitmap screenFill = BitmapFactory.decodeResource(res, reference);
+		Log.d("SCREEN SIZE","Dims: "+width+"x"+height);
 		Log.d("SCREENFILL","Dims: "+screenFill.getWidth()+"x"+screenFill.getHeight());
 		scalation.set((float)width/screenFill.getWidth(), (float)height/screenFill.getHeight());
 		screenFill.recycle();
+		Log.d("SCALATION","Dims: "+scalation.x+"x"+scalation.y);
 		//Both values set. Start preloading
 		if(res!=null) preloadImages();
 	}
@@ -181,5 +183,5 @@ public class SpriteFactory {
 	
 	//TODO: Use this method to recalculate speed and such to real screen coordinates.
 	public PointF getScalation() { return scalation; }
-
+	public Point getScreenDims() { return screenDim; }
 }

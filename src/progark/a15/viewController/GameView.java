@@ -48,16 +48,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		context=contextS;
 		initView();
 	}
-
-	@Override
-	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		super.onSizeChanged(w, h, oldw, oldh);
-		if(w != 0 && h != 0) {
-			//Screen size known! Initialize engine!
-			gEngine.init(context.getResources());
-			gEngine.setScreenSize(w,h);
-		}
-	}
 	
 	public void setGameSettings(Bundle gameSettings) {
 		gEngine.setGameSettings(gameSettings);
