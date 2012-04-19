@@ -157,22 +157,17 @@ public class PlayerSprite extends AbstractPhysSprite {
 		switch (c.getType()) {
 		//Small and large fuel bonus
 		case FUEL_ADD: case FUEL_FILL:
-			addFuel(getMagnitude(c.getType()));
+			addFuel(c.getType().getMagnitude(gEngine.getDifficulty()));
 			break;
 		//Small and large point bonus
 		case BONUSPOINT_SMALL: case BONUSPOINT_BIG:
-			gEngine.addPoints(getMagnitude(c.getType()));
+			gEngine.addPoints(c.getType().getMagnitude(gEngine.getDifficulty()));
 			break;
 		}
 		
 	}
 	
-	private int getMagnitude(BonusType b) {
-		if(gEngine.getDifficulty()==0) return b.getEasy();
-		if(gEngine.getDifficulty()==1) return b.getMedium();
-		if(gEngine.getDifficulty()==2) return b.getHard();
-		else return 0;
-	}
+
 	private void addFuel(int num) {
 		fuel+=num;
 		if(fuel>fuelMax) fuel=fuelMax;

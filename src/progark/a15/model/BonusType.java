@@ -22,5 +22,13 @@ public enum BonusType {
 	public int getEasy() { return mag_e; }
 	public int getMedium() { return mag_m; }
 	public int getHard() { return mag_h; }
+
+	public int getMagnitude(int difficulty) {
+		if(difficulty==0) return getEasy();
+		if(difficulty==1) return getMedium();
+		if(difficulty==2) return getHard();
+		else return 0;
+	}
+	
 	
 }
