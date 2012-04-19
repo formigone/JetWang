@@ -156,7 +156,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 	private void collectSprite(CollectableSprite c) {
 		switch (c.getType()) {
 		//Small and large fuel bonus
-		case FUEL_ADD: case FUEL_FILL:
+		case FUEL_ADD: case FUEL_FILL: case FUEL_DEC:
 			addFuel(c.getType().getMagnitude(gEngine.getDifficulty()));
 			break;
 		//Small and large point bonus

@@ -9,6 +9,7 @@ package progark.a15.model;
 public enum BonusType {
 	FUEL_ADD(5000, 3000, 1500),//10, 7, 5),
 	FUEL_FILL(100, 75, 50),
+	FUEL_DEC(-1500,-3000,-5000),
 	BONUSPOINT_SMALL(100, 200, 300),
 	BONUSPOINT_BIG(500, 700, 1000),
 	BONUS_OCCURRENCE(3, 2, 1);

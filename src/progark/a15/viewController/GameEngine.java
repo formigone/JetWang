@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,8 +43,9 @@ public class GameEngine {
 	private Paint backPaint = new Paint();
 	
 	//Paints for the HUD
-	private Paint fuelFrame = new Paint();
+
 	private Paint fuelFill = new Paint();
+	private BackgroundSprite fuelFillBg;
 	private Paint pointsPaint = new Paint();
 	private Paint pointsPaint2;
 	
@@ -54,10 +56,6 @@ public class GameEngine {
 		this.res = resources;
 		//Give spriteFactory access to the game resources
 		SpriteFactory.getInstance().setResources(resources);
-		
-		fuelFrame.setStrokeWidth(2);
-		fuelFrame.setStyle(Style.STROKE);
-		fuelFrame.setColor(Color.BLACK);
 		
 		fuelFill.setStyle(Style.FILL);
 		
@@ -97,6 +95,9 @@ public class GameEngine {
 		player=SpriteFactory.getInstance().getPlayer(getPlayerType());
 		player.setPointListener(this);
 		layers.get(2).addSprite(player);
+		//Make fuel fill background
+		fuelFillBg = SpriteFactory.getInstance().makeFuelFillBackground();
+		
 		//Make some clouds. We'll make all at once. REMEMBER: Up is negative numbers!
 		/*
 		 * TODO: Precalculate all bonuses here!
@@ -127,9 +128,16 @@ public class GameEngine {
 				for(int i=300;i>-18000;i-=20){
 					//Tweak math.random threshold to adjust number of fuel cans. smaller number->fewer fuel cans
 					if(Math.random()<(0.1+i/180000)*BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)) {
+						if(Math.random()>0.3/BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)){
 						CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
 						fuelcan.move((float)(screenSize.x*Math.random()), i);
 						layers.get(2).addSprite(fuelcan);
+						}
+						else{
+						CollectableSprite wastecan = SpriteFactory.getInstance().makeWaste();
+						wastecan.move((float)(screenSize.x*Math.random()), i);
+						layers.get(2).addSprite(wastecan);	
+						}
 					}
 				}
 	}
@@ -220,9 +228,9 @@ public class GameEngine {
 			
 		}
 		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
-		else if(player.getPosition().top<canvas.getClipBounds().centerY()/2) {
+		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
 			//Move all layers a nudge down!
-			float dy = canvas.getClipBounds().centerY()/2-player.getPosition().top;
+			float dy = canvas.getClipBounds().centerY()-player.getPosition().bottom;
 			//Increment height!
 			this.height+=dy;
 			//Increment points?
@@ -243,8 +251,10 @@ public class GameEngine {
 		 */
 		//FIXME  fjerner for ordens skyld//  Log.d("FUEL",player.getFuelLeftPerc()+"");
 		
-		canvas.drawRect(10, 10, screenSize.x/2, 30, fuelFrame);
-		canvas.drawRect(11, 11, (float)player.getFuelLeftPerc()*screenSize.x/2-2, 29, fuelFill);
+		fuelFillBg.draw(canvas);
+		//Get scalation for terseness
+		PointF scl = SpriteFactory.getInstance().getScalation();
+		canvas.drawRect(30*scl.x, 60*scl.y, (float)(player.getFuelLeftPerc()*690)*scl.x, 90*scl.y, fuelFill);
 		canvas.drawText(Integer.toString(points), screenSize.x/2+40, 30, pointsPaint);
 		canvas.drawText(Integer.toString(points), screenSize.x/2+40, 30, pointsPaint2);
 	}

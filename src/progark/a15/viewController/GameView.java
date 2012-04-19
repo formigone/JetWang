@@ -22,8 +22,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 	//Time counter for touch events. Only accept one touch event every "threshold" ms.
 	private long lastTime = -1;
 	//Only update five times a second.
-	private long threshold = 500;
-	
+
+	private long threshold = 100;
+
 	//initialization code
 	void initView(){
 		//initialize our screen holder

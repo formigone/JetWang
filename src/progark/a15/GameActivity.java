@@ -18,5 +18,6 @@ public class GameActivity extends Activity {
         gameSettings.putInt("playerType", getIntent().getExtras().getInt("playerType"));
         
         gV.setGameSettings(gameSettings);
+        
     }
 }
