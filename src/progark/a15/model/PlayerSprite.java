@@ -53,10 +53,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 		isBoosting=true;
 		
 		setAcceleration(Math.signum(x)*maxAcc*FloatMath.sqrt(1/(1+(y*y)/(x*x))), 
-						-maxAcc*FloatMath.sqrt(1/(1+(x*x)/(y*y)))+gravity);
-		Log.d("NEWACC",this.getAcceleration().x+" x "+this.getAcceleration().y);
-		Log.d("NEWSPEED",this.getSpeed().x+" x "+this.getSpeed().y);
-		
+						-maxAcc*FloatMath.sqrt(1/(1+(x*x)/(y*y)))+gravity);		
 	}
 	public void decelerate() {
 		isBoosting=false;
@@ -65,7 +62,6 @@ public class PlayerSprite extends AbstractPhysSprite {
 	
 	public void collided(CollisionListener c) {
 		if(c instanceof ObstacleSprite) {
-			Log.d("COLLISION","WOO!");
 			//Cast to ObstacleSprite
 			fixCollision((ObstacleSprite)c);
 		}	

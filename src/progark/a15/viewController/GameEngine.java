@@ -142,50 +142,6 @@ public class GameEngine {
 				}
 	}
 	
-//	private int nextLevel = 0;
-//		
-//	/**
-//	 * Generate new fuel cans as altitude increases
-//	 */
-//	public void generateFuel()
-//	{
-//		//heightLevel = roundInteger((int)height, 10000);
-//		int heightLevel = (int)height/5000;
-//		if (heightLevel == nextLevel)
-//		{
-//			for (int i=(int)height+5000; i>-(int)height+10000; i-=100)
-//			{
-//				if (Math.random() < 0.2)
-//				{
-//					CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
-//					fuelcan.move((float)(screenSize.x*Math.random()), i);
-//					layers.get(2).addSprite(fuelcan);
-//					Log.e("FUEL", "HEEEEEEEEEEEEEEEEEER");
-//				}
-//			}
-//			nextLevel++;
-//			Log.i("LEVEL", "Level "+nextLevel+" reached");
-//		}
-//	}
-//	
-//	/**
-//	 * Rounds the number to be a factor of a given number
-//	 * @param number
-//	 * @param round
-//	 * @return
-//	 */
-//	public int roundInteger(int number, int factor)
-//	{
-//		int temp = number*factor;
-//		temp = temp+(factor/2);
-//		temp = temp/factor;
-//		return temp*factor;		
-//	}
-		
-		
-		
-	
-	
 	/*
 	 * This is called every PaintThread.delay ms. (70ms atm)
 	 */
@@ -246,13 +202,10 @@ public class GameEngine {
 		
 		/*
 		 * Draw some HUD
-		 */
-		//FIXME  fjerner for ordens skyld//  Log.d("FUEL",player.getFuelLeftPerc()+"");
-		
+		 */		
 		fuelFillBg.draw(canvas);
 		//Get scalation for terseness
 		PointF scl = SpriteFactory.getInstance().getScalation();
-		
 		
 		canvas.drawRect(30*scl.x, 60*scl.y, (float)(player.getFuelLeftPerc()*690)*scl.x, 90*scl.y, fuelFill);
 		canvas.drawText(Integer.toString(points), 570*scl.x, 40*scl.y, pointsPaint2);
@@ -263,13 +216,11 @@ public class GameEngine {
 	 * Touch handler sent from view. Only thing controlled in this view is the player.
 	 */
 	public void onTouchDown(MotionEvent event) {
-		Log.d("TOUCH","touchdown");
 		//On touch, calculate acceleration vector.
 		player.accelerate(event.getX()-screenSize.x/2,
 						  event.getY()-screenSize.y);		
 	}
 	public void onTouchUp(MotionEvent event) {
-		Log.d("TOUCH","touchup");
 		//Player now starts falling again.
 		player.decelerate();
 	}
