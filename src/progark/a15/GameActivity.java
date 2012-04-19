@@ -10,7 +10,14 @@ public class GameActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
         GameView gV = (GameView) this.findViewById(R.id.gameView);
-        gV.setDifficulty(getIntent().getExtras().getInt("difficulty"));
+
+        Bundle gameSettings = new Bundle();
+        gameSettings.putInt("difficulty", getIntent().getExtras().getInt("difficulty"));
+        gameSettings.putInt("playerType", getIntent().getExtras().getInt("playerType"));
+        
+        gV.setGameSettings(gameSettings);
+        
     }
 }
