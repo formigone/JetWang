@@ -8,7 +8,6 @@ import progark.a15.model.BackgroundSprite;
 import progark.a15.model.BonusType;
 import progark.a15.model.CollectableSprite;
 import progark.a15.model.GameLayer;
-import progark.a15.model.Globals;
 import progark.a15.model.PlayerSprite;
 import progark.a15.model.SpriteFactory;
 
@@ -19,7 +18,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.RectF;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -42,20 +43,19 @@ public class GameEngine {
 	private Paint backPaint = new Paint();
 	
 	//Paints for the HUD
-	private Paint fuelFrame = new Paint();
+
 	private Paint fuelFill = new Paint();
+	private BackgroundSprite fuelFillBg;
 	private Paint pointsPaint = new Paint();
-	private Paint pointsPaint2;	
+	private Paint pointsPaint2;
+	
+	// PlayerType
+	private int playerType; 
 	
 	public void init(Resources resources) {
 		this.res = resources;
 		//Give spriteFactory access to the game resources
 		SpriteFactory.getInstance().setResources(resources);
-		this.difficulty=difficulty;
-		
-		fuelFrame.setStrokeWidth(2);
-		fuelFrame.setStyle(Style.STROKE);
-		fuelFrame.setColor(Color.BLACK);
 		
 		fuelFill.setStyle(Style.FILL);
 		
@@ -69,8 +69,20 @@ public class GameEngine {
 		pointsPaint2.setStyle(Style.STROKE);
 		
 	}
+	
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+	}
+	
+	// The GameView uses this method to pass data with difficulty and playerType
+	public void setGameSettings(Bundle gameSettings) {
+		this.difficulty = gameSettings.getInt("difficulty");
+		this.playerType = gameSettings.getInt("playerType");
+	}
+	
+	// Used to detect which character should be drawn on screen
+	public int getPlayerType() {
+		return this.playerType;
 	}
 	
 	public void initGame() {
@@ -80,9 +92,12 @@ public class GameEngine {
 		layers.get(0).addSprite(SpriteFactory.getInstance().getMountains());
 		layers.get(2).addSprite(SpriteFactory.getInstance().getGround());
 		//Make player
-		player=SpriteFactory.getInstance().getPlayer(Globals.getPlayerType());
+		player=SpriteFactory.getInstance().getPlayer(getPlayerType());
 		player.setPointListener(this);
 		layers.get(2).addSprite(player);
+		//Make fuel fill background
+		fuelFillBg = SpriteFactory.getInstance().makeFuelFillBackground();
+		
 		//Make some clouds. We'll make all at once. REMEMBER: Up is negative numbers!
 		/*
 		 * TODO: Precalculate all bonuses here!
@@ -236,8 +251,10 @@ public class GameEngine {
 		 */
 		//FIXME  fjerner for ordens skyld//  Log.d("FUEL",player.getFuelLeftPerc()+"");
 		
-		canvas.drawRect(10, 10, screenSize.x/2, 30, fuelFrame);
-		canvas.drawRect(11, 11, (float)player.getFuelLeftPerc()*screenSize.x/2-2, 29, fuelFill);
+		fuelFillBg.draw(canvas);
+		//Get scalation for terseness
+		PointF scl = SpriteFactory.getInstance().getScalation();
+		canvas.drawRect(30*scl.x, 60*scl.y, (float)(player.getFuelLeftPerc()*690)*scl.x, 90*scl.y, fuelFill);
 		canvas.drawText(Integer.toString(points), screenSize.x/2+40, 30, pointsPaint);
 		canvas.drawText(Integer.toString(points), screenSize.x/2+40, 30, pointsPaint2);
 	}
