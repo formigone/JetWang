@@ -9,7 +9,7 @@
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
-    <string name="new_game">New game</string>
+    <string name="new_game">Choose difficulty and character</string>
 	<string name="choose_diff">Choose a difficulty</string>
 	<string name="choose_char">Choose a character</string>
 	<string name="start_game">Start</string>
