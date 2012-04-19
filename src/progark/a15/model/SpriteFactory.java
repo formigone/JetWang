@@ -37,7 +37,8 @@ public class SpriteFactory {
 										 R.drawable.sprite128_2,
 										 R.drawable.ground,
 										 R.drawable.star64,
-										 R.drawable.fuelcan64
+										 R.drawable.fuelcan64,
+										 R.drawable.toxicwaste
 										 };
 	
 	/*
@@ -125,6 +126,13 @@ public class SpriteFactory {
 		CollectableSprite fuelcan = new CollectableSprite(img, BonusType.FUEL_ADD);
 		fuelcan.setPosition(new RectF(0,0,img.getWidth(),img.getHeight()));
 		return fuelcan;
+	}
+	
+	public CollectableSprite makeWaste(){
+		Bitmap img = cachedImages.get(R.drawable.toxicwaste);
+		CollectableSprite wastecan = new CollectableSprite(img, BonusType.FUEL_DEC);
+		wastecan.setPosition(new RectF(0,0,img.getWidth(),img.getHeight()));
+		return wastecan;
 	}
 	
 	/*

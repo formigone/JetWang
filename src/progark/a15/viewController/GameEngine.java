@@ -110,9 +110,16 @@ public class GameEngine {
 				for(int i=300;i>-18000;i-=20){
 					//Tweak math.random threshold to adjust number of fuel cans. smaller number->fewer fuel cans
 					if(Math.random()<(0.1+i/180000)*BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)) {
+						if(Math.random()>0.1){
 						CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
 						fuelcan.move((float)(screenSize.x*Math.random()), i);
 						layers.get(2).addSprite(fuelcan);
+						}
+						else{
+						CollectableSprite wastecan = SpriteFactory.getInstance().makeWaste();
+						wastecan.move((float)(screenSize.x*Math.random()), i);
+						layers.get(2).addSprite(wastecan);	
+						}
 					}
 				}
 	}
