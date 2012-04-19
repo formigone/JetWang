@@ -38,7 +38,8 @@ public class SpriteFactory {
 										 R.drawable.ground,
 										 R.drawable.star64,
 										 R.drawable.fuelcan64,
-										 R.drawable.toxicwaste
+										 R.drawable.toxicwaste,
+										 R.drawable.fuelfillbackground
 										 };
 	
 	/*
@@ -119,6 +120,13 @@ public class SpriteFactory {
 		BackgroundSprite star = new BackgroundSprite(img);
 		star.setPosition(new RectF(0,0,img.getWidth(), img.getHeight()));
 		return star;
+	}
+	
+	public BackgroundSprite makeFuelFillBackground(){
+		Bitmap img = cachedImages.get(R.drawable.fuelfillbackground);
+		BackgroundSprite fuelFill = new BackgroundSprite(img);
+		fuelFill.setPosition(new RectF(0,0,img.getWidth(), img.getHeight()));
+		return fuelFill;
 	}
 	
 	public CollectableSprite makeFuel(){
