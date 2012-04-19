@@ -121,11 +121,10 @@ public class PlayerSprite extends AbstractPhysSprite {
 		
 		//Jetpack on. Decrease fuel. For simplicity, decrease is time elapsed. (adjust max fuel for game balance instead.)
 		if(isBoosting) {
-			fuel-=dt;
+			addFuel((int)-dt*3);
 			//We're empty! Decelerate and set fuel to 0 (no negatives accepted)
 			if(fuel<=0) {
 				decelerate();
-				fuel=0;
 			}
 		}
 	}
@@ -171,6 +170,7 @@ public class PlayerSprite extends AbstractPhysSprite {
 	private void addFuel(int num) {
 		fuel+=num;
 		if(fuel>fuelMax) fuel=fuelMax;
+		else if(fuel<0) fuel=0;
 	}
 	
 }
