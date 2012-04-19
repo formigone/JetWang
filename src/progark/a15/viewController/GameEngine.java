@@ -107,7 +107,7 @@ public class GameEngine {
 		//TODO: Fuel cans _MUST_ be a function of achieved height, as they should become more sparse as one ascends.
 				for(int i=300;i>-18000;i-=20){
 					//Tweak math.random threshold to adjust number of fuel cans. smaller number->fewer fuel cans
-					if(Math.random()<(0.1+i/18000)*BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)) {
+					if(Math.random()<(0.1+i/180000)*BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)) {
 						CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
 						fuelcan.move((float)(screenSize.x*Math.random()), i);
 						layers.get(2).addSprite(fuelcan);
