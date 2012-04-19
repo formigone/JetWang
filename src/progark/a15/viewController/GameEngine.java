@@ -60,7 +60,7 @@ public class GameEngine {
 		fuelFill.setStyle(Style.FILL);
 		
 		pointsPaint.setAntiAlias(true);
-		pointsPaint.setStrokeWidth(1);
+		pointsPaint.setStrokeWidth(7);
 		pointsPaint.setColor(Color.YELLOW);
 		pointsPaint.setStyle(Style.FILL);
 		pointsPaint2 = new Paint(pointsPaint);
@@ -255,8 +255,8 @@ public class GameEngine {
 		
 		
 		canvas.drawRect(30*scl.x, 60*scl.y, (float)(player.getFuelLeftPerc()*690)*scl.x, 90*scl.y, fuelFill);
-		canvas.drawText(Integer.toString(points), 360*scl.x, 40*scl.y, pointsPaint);
-		canvas.drawText(Integer.toString(points), 360*scl.x, 40*scl.y, pointsPaint2);
+		canvas.drawText(Integer.toString(points), 570*scl.x, 40*scl.y, pointsPaint2);
+		canvas.drawText(Integer.toString(points), 570*scl.x, 40*scl.y, pointsPaint);
 	}
 
 	/*
