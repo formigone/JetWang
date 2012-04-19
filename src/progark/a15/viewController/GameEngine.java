@@ -63,7 +63,6 @@ public class GameEngine {
 		pointsPaint.setStrokeWidth(1);
 		pointsPaint.setColor(Color.YELLOW);
 		pointsPaint.setStyle(Style.FILL);
-		pointsPaint.setTextSize(40);
 		pointsPaint2 = new Paint(pointsPaint);
 		pointsPaint2.setColor(Color.BLACK);
 		pointsPaint2.setStyle(Style.STROKE);
@@ -97,7 +96,8 @@ public class GameEngine {
 		layers.get(2).addSprite(player);
 		//Make fuel fill background
 		fuelFillBg = SpriteFactory.getInstance().makeFuelFillBackground();
-		
+		pointsPaint.setTextSize(40*SpriteFactory.getInstance().getScalation().y);
+		pointsPaint2.setTextSize(40*SpriteFactory.getInstance().getScalation().y);
 		//Make some clouds. We'll make all at once. REMEMBER: Up is negative numbers!
 		/*
 		 * TODO: Precalculate all bonuses here!
@@ -254,9 +254,11 @@ public class GameEngine {
 		fuelFillBg.draw(canvas);
 		//Get scalation for terseness
 		PointF scl = SpriteFactory.getInstance().getScalation();
+		
+		
 		canvas.drawRect(30*scl.x, 60*scl.y, (float)(player.getFuelLeftPerc()*690)*scl.x, 90*scl.y, fuelFill);
-		canvas.drawText(Integer.toString(points), screenSize.x/2+40, 30, pointsPaint);
-		canvas.drawText(Integer.toString(points), screenSize.x/2+40, 30, pointsPaint2);
+		canvas.drawText(Integer.toString(points), 360*scl.x, 40*scl.y, pointsPaint);
+		canvas.drawText(Integer.toString(points), 360*scl.x, 40*scl.y, pointsPaint2);
 	}
 
 	/*
