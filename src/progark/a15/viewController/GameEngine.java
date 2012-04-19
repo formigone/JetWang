@@ -202,8 +202,7 @@ public class GameEngine {
 		fuelFillBg.draw(canvas);
 		//Get scalation for terseness
 		PointF scl = SpriteFactory.getInstance().getScalation();
-		
-		canvas.drawRect(30*scl.x, 60*scl.y, (float)(player.getFuelLeftPerc()*690)*scl.x, 90*scl.y, fuelFill);
+		canvas.drawRect((int)(20*scl.x),(int)(50*scl.y), (int)(player.getFuelLeftPerc()*700*scl.x), (int)(100*scl.y), fuelFill);
 		canvas.drawText(Integer.toString(points), 570*scl.x, 40*scl.y, pointsPaint2);
 		canvas.drawText(Integer.toString(points), 570*scl.x, 40*scl.y, pointsPaint);
 	}
