@@ -64,7 +64,6 @@ public class MainMenuActivity extends Activity {
 				int screenHeight = metrics.heightPixels;
 				int screenWidth = metrics.widthPixels;
 				Log.i("MY", "Actual Screen Height = " + screenHeight + " Width = " + screenWidth);   
-
 				// Now calculate the height that our layout can be set
 				// If you know that your application doesn't have statusBar added, then don't add here also. Same applies to application bar also 
 				int layoutHeight = screenHeight - (titleBarHeight + statusBarHeight);
