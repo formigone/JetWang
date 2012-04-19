@@ -61,8 +61,8 @@ public class GameLayer {
 			if(s.getPosition().bottom>c.getClipBounds().top) {
 				s.draw(c);
 			}
-			//If one sprite is above screen clip, the rest is too
-			else { return; }
+//			If one sprite is above screen clip, the rest is too
+			else { 	return;	}
 		}
 	}
 	
