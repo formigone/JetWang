@@ -116,45 +116,45 @@ public class GameEngine {
 				}
 	}
 	
-	private int nextLevel = 0;
-		
-	/**
-	 * Generate new fuel cans as altitude increases
-	 */
-	public void generateFuel()
-	{
-		//heightLevel = roundInteger((int)height, 10000);
-		int heightLevel = (int)height/5000;
-		if (heightLevel == nextLevel)
-		{
-			for (int i=(int)height+5000; i>-(int)height+10000; i-=100)
-			{
-				if (Math.random() < 0.2)
-				{
-					CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
-					fuelcan.move((float)(screenSize.x*Math.random()), i);
-					layers.get(2).addSprite(fuelcan);
-					Log.e("FUEL", "HEEEEEEEEEEEEEEEEEER");
-				}
-			}
-			nextLevel++;
-			Log.i("LEVEL", "Level "+nextLevel+" reached");
-		}
-	}
-	
-	/**
-	 * Rounds the number to be a factor of a given number
-	 * @param number
-	 * @param round
-	 * @return
-	 */
-	public int roundInteger(int number, int factor)
-	{
-		int temp = number*factor;
-		temp = temp+(factor/2);
-		temp = temp/factor;
-		return temp*factor;		
-	}
+//	private int nextLevel = 0;
+//		
+//	/**
+//	 * Generate new fuel cans as altitude increases
+//	 */
+//	public void generateFuel()
+//	{
+//		//heightLevel = roundInteger((int)height, 10000);
+//		int heightLevel = (int)height/5000;
+//		if (heightLevel == nextLevel)
+//		{
+//			for (int i=(int)height+5000; i>-(int)height+10000; i-=100)
+//			{
+//				if (Math.random() < 0.2)
+//				{
+//					CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
+//					fuelcan.move((float)(screenSize.x*Math.random()), i);
+//					layers.get(2).addSprite(fuelcan);
+//					Log.e("FUEL", "HEEEEEEEEEEEEEEEEEER");
+//				}
+//			}
+//			nextLevel++;
+//			Log.i("LEVEL", "Level "+nextLevel+" reached");
+//		}
+//	}
+//	
+//	/**
+//	 * Rounds the number to be a factor of a given number
+//	 * @param number
+//	 * @param round
+//	 * @return
+//	 */
+//	public int roundInteger(int number, int factor)
+//	{
+//		int temp = number*factor;
+//		temp = temp+(factor/2);
+//		temp = temp/factor;
+//		return temp*factor;		
+//	}
 		
 		
 		
@@ -164,9 +164,7 @@ public class GameEngine {
 	 * This is called every PaintThread.delay ms. (70ms atm)
 	 */
 	public void update(float dt) {
-		//TODO: Randomly generate bonuses and obstacles?
-		//TODO: Obstacles and bonuses as a function of achieved height?
-		generateFuel();		
+		//generateFuel();		
 		//Player stops when hitting screen sides.
 		if(player.getPosition().left<0) {
 			player.move(-player.getPosition().left+1, 0);
