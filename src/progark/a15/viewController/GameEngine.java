@@ -104,7 +104,7 @@ public class GameEngine {
 		 * Arrange them so that the bottommost ones (highest y-value) is added first! 
 		 * Layers will terminate sprite iteration at first sprite above screen bounds, for efficiency.
 		 */
-		for(int i=300;i>-18000;i-=20){
+		for(int i=300;i>-18000;i-=100){
 			//Tweak math.random threshold to adjust number of clouds. smaller number->fewer clouds
 			if(Math.random()<0.2) {
 				BackgroundSprite cloud = SpriteFactory.getInstance().makeCloud();
@@ -114,7 +114,7 @@ public class GameEngine {
 		}
 		
 		//Adding stars. All at once.
-		for(int i=-18000;i>-36000;i-=20){
+		for(int i=-18000;i>-36000;i-=100){
 			//Tweak math.random threshold to adjust number of stars. smaller number->fewer stars
 			if(Math.random()<0.1) {
 				BackgroundSprite star = SpriteFactory.getInstance().makeStar();
@@ -127,7 +127,7 @@ public class GameEngine {
 		//TODO: Fuel cans _MUST_ be a function of achieved height, as they should become more sparse as one ascends.
 				for(int i=300;i>-36000;i-=20){
 					//Tweak math.random threshold to adjust number of fuel cans. smaller number->fewer fuel cans
-					if(Math.random()<(0.1+i/360000)*BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)) {
+					if(Math.random()<(0.1+i/360000)){//*BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)) {
 						if(Math.random()>0.3/BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)){
 						CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
 						fuelcan.move((float)(screenSize.x*Math.random()), i);
@@ -196,13 +196,11 @@ public class GameEngine {
 		if(player.getPosition().left<0) {
 			player.move(-player.getPosition().left+1, 0);
 			player.setSpeed(-player.getSpeed().x, player.getSpeed().y);
-			player.setAcceleration(0, player.getAcceleration().y);
 		}
 
 		if(player.getPosition().right>this.screenSize.x) {
 			player.move(screenSize.x-player.getPosition().right-1, 0);
 			player.setSpeed(-player.getSpeed().x, player.getSpeed().y);
-			player.setAcceleration(0, player.getAcceleration().y);
 		}
 		
 		//Update all the game layers
