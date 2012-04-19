@@ -1,6 +1,7 @@
 package progark.a15.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -9,7 +10,9 @@ import android.util.Log;
 
 
 public class GameLayer {
-	private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+	private LinkedList<Sprite> sprites = new LinkedList<Sprite>();
+	
+	
 	//Does this layer check for collision?
 	private boolean isPhysical;
 	public GameLayer(boolean isPhys) {
@@ -17,10 +20,11 @@ public class GameLayer {
 	}
 
 	public void addSprite(Sprite s) {
-		sprites.add(s);
+		sprites.addLast(s);
 	}
 	public void removeSprite(Sprite s) {
-		sprites.remove(s);
+		if(sprites.getFirst()==s) sprites.removeFirst();
+		else sprites.remove(s);
 	}
 
 	//Update all sprites and check for collisions
@@ -48,7 +52,7 @@ public class GameLayer {
 		for(Sprite s : sprites) {
 			//Sprite has passed below game screen. Delete it.
 			if(s.getPosition().top>c.getClipBounds().bottom) {
-				sprites.remove(s);
+				removeSprite(s);
 				//Since one sprite is removed, we have to iterate over again (Else we have no control over the list anymore.)
 				draw(c);
 				return;
