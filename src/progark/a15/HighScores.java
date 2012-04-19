@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 
 public class HighScores {
 	private String fileName = "JetWangScores.dat";
@@ -33,21 +34,17 @@ public class HighScores {
 		try {
 			BufferedReader r = new BufferedReader(new InputStreamReader(context.openFileInput(fileName)));
 			String line = r.readLine();
-			int i=0;
 			while(line!=null) {
 				scores.add(new HighScore(line));
-				i++;
 				line = r.readLine();
 			}
 			r.close();
 			Collections.sort(scores);
-			return scores.subList(0, num-1);
-			
+			num = Math.min(num, scores.size());
+			return scores.subList(0, num);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return scores;
 	}
-	
-	
 }

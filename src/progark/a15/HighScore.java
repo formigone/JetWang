@@ -8,11 +8,10 @@ public class HighScore implements Comparable<HighScore> {
 		this.score=score;
 	}
 	public HighScore(String rawData) {
-		String[] split = rawData.split("&&");
+		String[] split = rawData.split("§§");
 		name=split[0];
 		score=Integer.parseInt(split[1]);
 	}
-	
 	
 	public String getName() { return name; }
 	public int getScore() { return score; }
@@ -20,4 +19,5 @@ public class HighScore implements Comparable<HighScore> {
 	public int compareTo(HighScore arg0) {
 		return (int)Math.signum(this.score-arg0.getScore());
 	}
+	public String toString() { return name+": "+score; }
 }

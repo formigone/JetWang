@@ -2,17 +2,23 @@ package progark.a15;
 
 import progark.a15.model.SpriteFactory;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class MainMenuActivity extends Activity {
@@ -22,12 +28,12 @@ public class MainMenuActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainmenu);
+		//HighScores scores = new HighScores(this);
+		//scores.writeScore("Amateur", 1336);
 		//Give spriteFactory resources
 		SpriteFactory.getInstance().setResources(this.getResources());
 		calculateScreenSize();
-
-
-
+		makeHSList();
 		Button startButton = (Button) findViewById(R.id.new_game_button);
 
 		startButton.setOnClickListener(new View.OnClickListener() {
@@ -77,4 +83,38 @@ public class MainMenuActivity extends Activity {
 			} 
 		}); 
 	}
+	private void makeHSList() {
+		ListView scores = (ListView) this.findViewById(R.id.highScoreList);
+		HighScores hs = new HighScores(this);
+		Log.d("HSLIST","Starting to generate list of high scores");
+		scores.setAdapter(new ArrayAdapter<HighScore>(this, R.layout.highscore_list_item, hs.getTopScores(5)) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				Log.d("GETTING","List element");
+				View row;
+				LayoutInflater mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+				if (null == convertView) {
+					row = mInflater.inflate(R.layout.highscore_list_item, null);
+				} else {
+					row = convertView;
+				}
+
+				TextView textName = (TextView) row.findViewById(R.id.score_name);
+				textName.setText(this.getItem(position).getName());
+				TextView textScore = (TextView) row.findViewById(R.id.score_value);
+				textScore.setText(this.getItem(position).getScore()+"");
+				textName.setTextColor(Color.BLACK);
+				textScore.setTextColor(Color.BLACK);
+				
+				
+				Log.d("ADDINGTEXT",this.getItem(position).getName()+":"+this.getItem(position).getScore());
+				return row;
+			}
+		});
+		Log.d("ELEMENTS","Number of elements: "+scores.getAdapter().getCount()+"."+hs.getTopScores(5).size());
+
+	}
+
+
 }
