@@ -1,7 +1,7 @@
 package progark.a15.viewController;
 
-import progark.a15.model.Globals;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -23,8 +23,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 	private long lastTime = -1;
 	//Only update five times a second.
 	private long threshold = 500;
-
-
+	
 	//initialization code
 	void initView(){
 		//initialize our screen holder
@@ -53,13 +52,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		if(w != 0 && h != 0) {
-			//Screen size known! Initialize engine! Set difficulty TODO: Get difficulty selection
+			//Screen size known! Initialize engine!
 			gEngine.init(context.getResources());
 			gEngine.setScreenSize(w,h);
 		}
 	}
-	public void setDifficulty(int difficulty) {
-		gEngine.setDifficulty(difficulty);
+	
+	public void setGameSettings(Bundle gameSettings) {
+		gEngine.setGameSettings(gameSettings);
 	}
 
 	//these methods are overridden from the SurfaceView super class. They are automatically called when a SurfaceView is created, resumed or suspended.

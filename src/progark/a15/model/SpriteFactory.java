@@ -77,7 +77,7 @@ public class SpriteFactory {
 		b.setPosition(new RectF(0,screenDim.y-img.getHeight(),img.getWidth(),screenDim.y));
 		return b;
 	}
-	public PlayerSprite getPlayer(PlayerType playerType) {
+	public PlayerSprite getPlayer(int playerType) {
 		SpriteSheet flame = new SpriteSheet(3,2,70,cachedImages.get(R.drawable.flamesheet64));
 		
 		// Player selection
@@ -88,10 +88,10 @@ public class SpriteFactory {
 		System.out.println("playerType: " + playerType);
 		
 		// Player selection
-		if (playerType == PlayerType.PLAYER_GREEN) {
-			img = cachedImages.get(R.drawable.sprite128);
-		} else if (playerType == PlayerType.PLAYER_RED) {
-			img = cachedImages.get(R.drawable.sprite128_2);
+		if (playerType == 0) {
+			img = cachedImages.get(R.drawable.sprite128); // Green player
+		} else if (playerType == 1) {
+			img = cachedImages.get(R.drawable.sprite128_2); // Red player
 		} else {
 			// This may not be necessary? Just in case something goes wrong.
 			img = cachedImages.get(R.drawable.sprite128);

@@ -8,7 +8,6 @@ import progark.a15.model.BackgroundSprite;
 import progark.a15.model.BonusType;
 import progark.a15.model.CollectableSprite;
 import progark.a15.model.GameLayer;
-import progark.a15.model.Globals;
 import progark.a15.model.PlayerSprite;
 import progark.a15.model.SpriteFactory;
 
@@ -20,6 +19,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -45,13 +45,15 @@ public class GameEngine {
 	private Paint fuelFrame = new Paint();
 	private Paint fuelFill = new Paint();
 	private Paint pointsPaint = new Paint();
-	private Paint pointsPaint2;	
+	private Paint pointsPaint2;
+	
+	// PlayerType
+	private int playerType; 
 	
 	public void init(Resources resources) {
 		this.res = resources;
 		//Give spriteFactory access to the game resources
 		SpriteFactory.getInstance().setResources(resources);
-		this.difficulty=difficulty;
 		
 		fuelFrame.setStrokeWidth(2);
 		fuelFrame.setStyle(Style.STROKE);
@@ -69,8 +71,20 @@ public class GameEngine {
 		pointsPaint2.setStyle(Style.STROKE);
 		
 	}
+	
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+	}
+	
+	// The GameView uses this method to pass data with difficulty and playerType
+	public void setGameSettings(Bundle gameSettings) {
+		this.difficulty = gameSettings.getInt("difficulty");
+		this.playerType = gameSettings.getInt("playerType");
+	}
+	
+	// Used to detect which character should be drawn on screen
+	public int getPlayerType() {
+		return this.playerType;
 	}
 	
 	public void initGame() {
@@ -80,7 +94,7 @@ public class GameEngine {
 		layers.get(0).addSprite(SpriteFactory.getInstance().getMountains());
 		layers.get(2).addSprite(SpriteFactory.getInstance().getGround());
 		//Make player
-		player=SpriteFactory.getInstance().getPlayer(Globals.getPlayerType());
+		player=SpriteFactory.getInstance().getPlayer(getPlayerType());
 		player.setPointListener(this);
 		layers.get(2).addSprite(player);
 		//Make some clouds. We'll make all at once. REMEMBER: Up is negative numbers!
