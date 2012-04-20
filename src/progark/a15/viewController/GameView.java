@@ -1,9 +1,17 @@
 package progark.a15.viewController;
 
+import progark.a15.DiffSelectActivity;
+import progark.a15.GameActivity;
+import progark.a15.MainMenuActivity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -48,9 +56,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		context=contextS;
 		initView();
 	}
-	
+
 	public void setGameSettings(Bundle gameSettings) {
 		gEngine.setGameSettings(gameSettings);
+	}
+	public void pause() {
+		thread.pause();
 	}
 
 	//these methods are overridden from the SurfaceView super class. They are automatically called when a SurfaceView is created, resumed or suspended.
@@ -83,7 +94,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	public boolean onTouchEvent(MotionEvent event) {		
 		if(event.getAction()==MotionEvent.ACTION_UP) {
 			gEngine.onTouchUp(event);
 		}
@@ -98,5 +109,4 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		}
 		return true;
 	}
-
 }

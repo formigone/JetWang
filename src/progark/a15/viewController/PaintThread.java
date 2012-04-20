@@ -36,7 +36,19 @@ public class PaintThread extends Thread{
 
 		gEngine=gEngineS;
 	}
-
+	
+	
+	//Pause/Resume method.
+	public void pause() {
+		if(state==RUNNING) {
+			state=PAUSED;
+		}
+		else if(state==PAUSED) {
+			state=RUNNING;
+			this.run();
+		}
+		
+	}
 
 	//This is the most important part of the code. It is invoked when the call to start() is
 	//made from the SurfaceView class. It loops continuously until the game is finished or
