@@ -77,7 +77,6 @@ public class GameLayer {
 					//Collision detected! Activate casting hell!
 					if(s2 instanceof CollisionListener && s2 != s1 && RectF.intersects(s1.getPosition(),s2.getPosition())) {
 						//Notify both sprites of collision
-						Log.d("COLLIDED","WEE!");
 						((CollisionListener) s1).collided((CollisionListener) s2);
 						((CollisionListener) s2).collided((CollisionListener) s1);
 					}

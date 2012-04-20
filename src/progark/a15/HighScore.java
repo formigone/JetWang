@@ -17,7 +17,7 @@ public class HighScore implements Comparable<HighScore> {
 	public int getScore() { return score; }
 	
 	public int compareTo(HighScore arg0) {
-		return (int)Math.signum(this.score-arg0.getScore());
+		return (int)Math.signum(arg0.getScore()-this.score);
 	}
 	public String toString() { return name+": "+score; }
 }

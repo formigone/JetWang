@@ -28,8 +28,6 @@ public class MainMenuActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainmenu);
-		//HighScores scores = new HighScores(this);
-		//scores.writeScore("Amateur", 1336);
 		//Give spriteFactory resources
 		SpriteFactory.getInstance().setResources(this.getResources());
 		calculateScreenSize();
@@ -86,11 +84,9 @@ public class MainMenuActivity extends Activity {
 	private void makeHSList() {
 		ListView scores = (ListView) this.findViewById(R.id.highScoreList);
 		HighScores hs = new HighScores(this);
-		Log.d("HSLIST","Starting to generate list of high scores");
 		scores.setAdapter(new ArrayAdapter<HighScore>(this, R.layout.highscore_list_item, hs.getTopScores(5)) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
-				Log.d("GETTING","List element");
 				View row;
 				LayoutInflater mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -106,14 +102,9 @@ public class MainMenuActivity extends Activity {
 				textScore.setText(this.getItem(position).getScore()+"");
 				textName.setTextColor(Color.BLACK);
 				textScore.setTextColor(Color.BLACK);
-				
-				
-				Log.d("ADDINGTEXT",this.getItem(position).getName()+":"+this.getItem(position).getScore());
 				return row;
 			}
 		});
-		Log.d("ELEMENTS","Number of elements: "+scores.getAdapter().getCount()+"."+hs.getTopScores(5).size());
-
 	}
 
 

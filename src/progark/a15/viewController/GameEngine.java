@@ -3,6 +3,9 @@ package progark.a15.viewController;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import progark.a15.GameActivity;
+import progark.a15.HighScores;
+import progark.a15.MainMenuActivity;
 import progark.a15.R;
 import progark.a15.model.BackgroundSprite;
 import progark.a15.model.BonusType;
@@ -11,7 +14,12 @@ import progark.a15.model.GameLayer;
 import progark.a15.model.PlayerSprite;
 import progark.a15.model.SpriteFactory;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,13 +30,21 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameEngine {
-	//App context for dialog boxes
-	private Context context;
-	
+	//Game context
+	private Handler handler;
 	//Game layers
 	private ArrayList<GameLayer> layers = new ArrayList<GameLayer>();
 	//Player
@@ -43,23 +59,22 @@ public class GameEngine {
 	private float height=1;
 	//black painter below to clear the screen before the game is rendered Maybe remove this if background sprites covers all?
 	private Paint backPaint = new Paint();
-	
+
 	//Paints for the HUD
 
 	private Paint fuelFill = new Paint();
 	private BackgroundSprite fuelFillBg;
 	private Paint pointsPaint = new Paint();
 	private Paint pointsPaint2;
-	
+
 	// PlayerType
 	private int playerType; 
-	
-	public GameEngine(Context context) {
-		this.context = context;
+
+	public GameEngine() {
 		//Fetch screen dimensions from sprite factory
 		this.screenSize=SpriteFactory.getInstance().getScreenDims();
 		fuelFill.setStyle(Style.FILL);
-		
+
 		pointsPaint.setAntiAlias(true);
 		pointsPaint.setStrokeWidth(7*SpriteFactory.getInstance().getScalation().y);
 		pointsPaint.setColor(Color.argb(255, 236, 201, 39));
@@ -69,23 +84,22 @@ public class GameEngine {
 		pointsPaint2.setColor(Color.BLACK);
 		pointsPaint2.setStyle(Style.STROKE);
 	}
-	
-	public void setDifficulty(int difficulty) {
-		this.difficulty = difficulty;
-	}
-	
+
 	// The GameView uses this method to pass data with difficulty and playerType
 	public void setGameSettings(Bundle gameSettings) {
 		this.difficulty = gameSettings.getInt("difficulty");
 		this.playerType = gameSettings.getInt("playerType");
 		initGame();
 	}
-	
+	public void setGameOverHandler(Handler h) {
+		this.handler=h;
+	}
+
 	// Used to detect which character should be drawn on screen
 	public int getPlayerType() {
 		return this.playerType;
 	}
-	
+
 	public void initGame() {
 		layers.add(new GameLayer(false)); //Background layer 1
 		layers.add(new GameLayer(false)); //Background layer 2
@@ -114,7 +128,7 @@ public class GameEngine {
 				layers.get(1).addSprite(cloud);
 			}
 		}
-		
+
 		//Adding stars. All at once.
 		for(int i=-18000;i>-36000;i-=100){
 			//Tweak math.random threshold to adjust number of stars. smaller number->fewer stars
@@ -124,26 +138,26 @@ public class GameEngine {
 				layers.get(1).addSprite(star);
 			}
 		}
-		
+
 		//Adding fuelcans.
 		//TODO: Fuel cans _MUST_ be a function of achieved height, as they should become more sparse as one ascends.
-				for(int i=300;i>-36000;i-=20){
-					//Tweak math.random threshold to adjust number of fuel cans. smaller number->fewer fuel cans
-					if(Math.random()<(0.1+i/360000)){//*BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)) {
-						if(Math.random()>0.3/BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)){
-						CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
-						fuelcan.move((float)(screenSize.x*Math.random()), i);
-						layers.get(2).addSprite(fuelcan);
-						}
-						else{
-						CollectableSprite wastecan = SpriteFactory.getInstance().makeWaste();
-						wastecan.move((float)(screenSize.x*Math.random()), i);
-						layers.get(2).addSprite(wastecan);	
-						}
-					}
+		for(int i=300;i>-36000;i-=20){
+			//Tweak math.random threshold to adjust number of fuel cans. smaller number->fewer fuel cans
+			if(Math.random()<(0.1+i/360000)){//*BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)) {
+				if(Math.random()>0.3/BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)){
+					CollectableSprite fuelcan = SpriteFactory.getInstance().makeFuel();
+					fuelcan.move((float)(screenSize.x*Math.random()), i);
+					layers.get(2).addSprite(fuelcan);
 				}
+				else{
+					CollectableSprite wastecan = SpriteFactory.getInstance().makeWaste();
+					wastecan.move((float)(screenSize.x*Math.random()), i);
+					layers.get(2).addSprite(wastecan);	
+				}
+			}
+		}
 	}
-	
+
 	/*
 	 * This is called every PaintThread.delay ms. (70ms atm)
 	 */
@@ -160,45 +174,48 @@ public class GameEngine {
 			player.move(screenSize.x-player.getPosition().right-1, 0);
 			player.setSpeed(-player.getSpeed().x, player.getSpeed().y);
 		}
-		
+
 		//Update all the game layers
 		for(GameLayer l : layers)
 			l.update(dt);
 	}	
-	
+
 	/*
 	 * Draw is synchronized. Called about as often as the update()
 	 */
 	public void draw(Canvas canvas) {		
 		//Background color is function of achieved height. 
 		float function = 1-0.00005f*height <0 ? 0 : 1-0.00005f*height;
-		
-		
 		backPaint.setARGB(255, (int)(50*function), (int)(174*function), (int)(245*function));
 		canvas.drawRect(canvas.getClipBounds(), backPaint);
-		//Player is below screen. Game over.
-		if(player.getPosition().top>canvas.getClipBounds().bottom) {
-			showGameOverDialog();
-		}
 		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
-		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
+		if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
 			//Move all layers a nudge down!
 			float dy = canvas.getClipBounds().centerY()-player.getPosition().bottom;
 			//Increment height!
 			this.height+=dy;
 			//Increment points? Points are given based on difficulty level. Higher difficulty level = harder&&more rewarding.
-			this.addPoints((int)(dy*10*difficulty));
-			
+			this.addPoints((int)(dy*10/BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)));
 			//Background layer moves slower than the rest -> Parallax mapping.
 			layers.get(0).move(0, dy*0.08f);
 			layers.get(1).move(0, dy);
 			layers.get(2).move(0, dy);
-			
+
 			//Move Layers to compensate
 		}
+		//Player is below screen. Game over. Notify GameActivity
+		if(player.getPosition().top>canvas.getClipBounds().bottom) {
+			Message msg = new Message();
+			Bundle bdl = new Bundle();
+			bdl.putInt("score", points);
+			msg.setData(bdl);
+			handler.dispatchMessage(msg);
+		}
+		
+		
 		for(GameLayer l : layers)
 			l.draw(canvas);
-		
+
 		/*
 		 * Draw some HUD
 		 */		
@@ -216,23 +233,17 @@ public class GameEngine {
 	public void onTouchDown(MotionEvent event) {
 		//On touch, calculate acceleration vector.
 		player.accelerate(event.getX()-screenSize.x/2,
-						  event.getY()-screenSize.y);		
+				event.getY()-screenSize.y);		
 	}
 	public void onTouchUp(MotionEvent event) {
 		//Player now starts falling again.
 		player.decelerate();
 	}
-	
+
 	//Generic method for adding points
 	public void addPoints(int points) {
 		this.points+=points;
 	}
 	//PlayerSprite needs to check difficulty to calculate magnitude of bonuses collected.
 	public int getDifficulty() { return difficulty; }
-	
-	
-	private void showGameOverDialog() {
-		
-		
-	}
 }

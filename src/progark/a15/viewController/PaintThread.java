@@ -3,20 +3,33 @@ package progark.a15.viewController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import progark.a15.GameActivity;
+import progark.a15.HighScores;
+import progark.a15.MainMenuActivity;
+import progark.a15.R;
 
+
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class PaintThread extends Thread{
+public class PaintThread extends Thread {
+	
 	private SurfaceHolder mSurfaceHolder;
-	private Handler mHandler;
-	private Context mContext;
 	GameEngine gEngine;
-
+	private Context context;
 	//for consistent rendering
 	private float sleepTime;
 	//amount of time between frames (in seconds), optimally
@@ -27,14 +40,11 @@ public class PaintThread extends Thread{
 	public final static int RUNNING = 1;
 	public final static int PAUSED = 2;
 
-	public PaintThread(SurfaceHolder surfaceHolder, Context context, Handler handler, GameEngine gEngineS) {
-
+	public PaintThread(SurfaceHolder surfaceHolder,Context context, GameEngine gEngineS) {
+		this.context=context;
 		//data about the screen
 		mSurfaceHolder = surfaceHolder;
-		this.mHandler = handler;
-		this.mContext = context;
-
-		gEngine=gEngineS;
+		gEngine=gEngineS;		
 	}
 	
 	

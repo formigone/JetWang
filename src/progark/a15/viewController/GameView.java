@@ -2,22 +2,31 @@ package progark.a15.viewController;
 
 import progark.a15.DiffSelectActivity;
 import progark.a15.GameActivity;
+import progark.a15.HighScores;
 import progark.a15.MainMenuActivity;
+import progark.a15.R;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
-
 	//Game engine
 	private GameEngine gEngine;
 
@@ -39,12 +48,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		SurfaceHolder holder = getHolder();
 		holder.addCallback( this);
 		//Make our game engine. Initialize it when we know the screen size.
-		gEngine = new GameEngine(context);
+		gEngine = new GameEngine();
 		//initialize our Thread class. A call will be made to start it later
-		thread = new PaintThread(holder, context, new Handler(), gEngine);
-		setFocusable(true);
-	}	
-
+		thread = new PaintThread(holder,context, gEngine);
+		//Pass paintThread callback to game engine
+		setFocusable(true);		
+	}
+	public void setGameOverHandler(Handler h) {
+		gEngine.setGameOverHandler(h);
+	}
+	
+	
 	//class constructors
 	public GameView(Context contextS, AttributeSet attrs, int defStyle){
 		super(contextS, attrs, defStyle);
@@ -85,7 +99,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 	public void surfaceCreated(SurfaceHolder arg0) {
 		if(thread.state==PaintThread.PAUSED){
 			//When game is opened again in the Android OS
-			thread = new PaintThread(getHolder(), context, new Handler(), gEngine);
+			thread = new PaintThread(getHolder(),context, gEngine);
 			thread.start();
 		}else{
 			//creating the game Thread for the first time
