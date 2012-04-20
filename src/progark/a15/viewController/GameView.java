@@ -31,7 +31,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		SurfaceHolder holder = getHolder();
 		holder.addCallback( this);
 		//Make our game engine. Initialize it when we know the screen size.
-		gEngine = new GameEngine();
+		gEngine = new GameEngine(context);
 		//initialize our Thread class. A call will be made to start it later
 		thread = new PaintThread(holder, context, new Handler(), gEngine);
 		setFocusable(true);

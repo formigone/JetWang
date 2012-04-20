@@ -26,6 +26,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 public class GameEngine {
+	//App context for dialog boxes
+	private Context context;
+	
 	//Game layers
 	private ArrayList<GameLayer> layers = new ArrayList<GameLayer>();
 	//Player
@@ -51,7 +54,8 @@ public class GameEngine {
 	// PlayerType
 	private int playerType; 
 	
-	public GameEngine() {
+	public GameEngine(Context context) {
+		this.context = context;
 		//Fetch screen dimensions from sprite factory
 		this.screenSize=SpriteFactory.getInstance().getScreenDims();
 		fuelFill.setStyle(Style.FILL);
