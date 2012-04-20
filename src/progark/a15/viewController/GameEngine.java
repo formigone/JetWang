@@ -178,10 +178,7 @@ public class GameEngine {
 		canvas.drawRect(canvas.getClipBounds(), backPaint);
 		//Player is below screen. Game over.
 		if(player.getPosition().top>canvas.getClipBounds().bottom) {
-			
-			player.setSpeed(0, 0);
-			player.setAcceleration(0, 0);
-			
+			showGameOverDialog();
 		}
 		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
 		else if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
@@ -232,4 +229,10 @@ public class GameEngine {
 	}
 	//PlayerSprite needs to check difficulty to calculate magnitude of bonuses collected.
 	public int getDifficulty() { return difficulty; }
+	
+	
+	private void showGameOverDialog() {
+		
+		
+	}
 }
