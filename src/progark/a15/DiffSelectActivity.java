@@ -64,7 +64,7 @@ public class DiffSelectActivity extends Activity {
 					
 				} else {
 					// Tell the user to choose difficulty and character
-					Toast.makeText(getApplicationContext(), "You must choose a difficulty and a character.", Toast.LENGTH_SHORT);
+					Toast.makeText(getApplicationContext(), "You must choose a difficulty and a character.", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

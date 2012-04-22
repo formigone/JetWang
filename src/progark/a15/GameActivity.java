@@ -92,6 +92,7 @@ public class GameActivity extends Activity {
 			Button quitBtn = (Button) dialog.findViewById(R.id.gameover_btn_quit);
 			quitBtn.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
+					dialog.dismiss();
 					Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
 					startActivity(intent);
 				}});
@@ -108,6 +109,7 @@ public class GameActivity extends Activity {
 						//Name input. Write score to persistent storage and return to main menu.
 						HighScores hs = new HighScores(GameActivity.this);
 						hs.writeScore(name, lastScore);
+						dialog.dismiss();
 						Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
 						startActivity(intent);
 					}
