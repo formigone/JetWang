@@ -1,5 +1,7 @@
 package progark.a15;
 
+import java.util.List;
+
 import progark.a15.model.SpriteFactory;
 import android.app.Activity;
 import android.content.Context;
@@ -22,7 +24,14 @@ import android.widget.TextView;
 
 
 public class MainMenuActivity extends Activity {
+	
+	static final int NUMBER_OF_HIGH_SCORES = 5;
+	
+	HighScores hs;
+	List<HighScore> hsList;
+	ArrayAdapter<HighScore> hsAdapter;
 	LinearLayout root;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +53,15 @@ public class MainMenuActivity extends Activity {
 		});
 
 	}	
-
+	
+	@Override
+	public void onRestart() {
+		super.onRestart();
+		hsList.clear(); // FIXME? Not sure if clear() and addAll() is the best (cleanest) way to make the refreshing of the highscores work, but it does the trick.
+		hsList.addAll(hs.getTopScores(NUMBER_OF_HIGH_SCORES));
+		hsAdapter.notifyDataSetChanged();
+	}
+	
 	private void calculateScreenSize() {
 		// Get the layout id
 		root = (LinearLayout) findViewById(R.id.mainmenu);
@@ -83,8 +100,9 @@ public class MainMenuActivity extends Activity {
 	}
 	private void makeHSList() {
 		ListView scores = (ListView) this.findViewById(R.id.highScoreList);
-		HighScores hs = new HighScores(this);
-		scores.setAdapter(new ArrayAdapter<HighScore>(this, R.layout.highscore_list_item, hs.getTopScores(5)) {
+		hs = new HighScores(this);
+		hsList = hs.getTopScores(NUMBER_OF_HIGH_SCORES);
+		hsAdapter = new ArrayAdapter<HighScore>(this, R.layout.highscore_list_item, hsList) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View row;
@@ -104,7 +122,8 @@ public class MainMenuActivity extends Activity {
 				textScore.setTextColor(Color.BLACK);
 				return row;
 			}
-		});
+		};
+		scores.setAdapter(hsAdapter);
 	}
 
 
