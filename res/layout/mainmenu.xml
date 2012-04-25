@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainmenu"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/backgroundstart"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent"
+    android:background="@drawable/backgroundpreview"
+    android:gravity="bottom" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:text="@string/score_header"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ListView
+            android:id="@+id/highScoreList"
+            android:layout_width="wrap_content"
+            android:layout_margin="10dp" 
+            android:layout_height="250dp">
+        </ListView>
+    </LinearLayout>
 
     <Button
         android:id="@+id/new_game_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:minHeight="40dp"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="20dp"
         android:text="@string/new_game" />
 
+<<<<<<< HEAD
+</RelativeLayout>
+=======
     <TextView
         android:id="@+id/textView1"
         android:layout_width="fill_parent"
@@ -37,3 +65,4 @@
     </ListView>
 
 </LinearLayout>
+>>>>>>> branch 'master' of https://mads-b@github.com/spohner/JetWang.git
