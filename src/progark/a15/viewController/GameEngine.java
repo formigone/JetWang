@@ -54,7 +54,7 @@ public class GameEngine {
 	//Difficulty set
 	private int difficulty;
 	//Point counter. Defined by achieved height and bonuses picked up.
-	private int points=1337;
+	private int points=0;
 	//Height measuring
 	private float height=1;
 	//black painter below to clear the screen before the game is rendered Maybe remove this if background sprites covers all?
