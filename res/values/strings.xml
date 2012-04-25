@@ -5,7 +5,7 @@
     <string name="gameover_title">Game over!</string>
     <string name="gameover_msg">Input name below. Your score: </string>
     <string name="gameover_btn_quit">Quit</string>
-    <string name="gameover_btn_submit">Submit score</string>
+    <string name="gameover_btn_submit">Submit</string>
     <string name="gameover_noname_error">No name written! Input a name and try again.</string>
     <string name="app_name">JetWang</string>
     <string name="header">Jetman</string>
