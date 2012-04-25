@@ -184,47 +184,54 @@ public class GameEngine {
 	 * Draw is synchronized. Called about as often as the update()
 	 */
 	public void draw(Canvas canvas) {		
-		//Background color is function of achieved height. 
-		float function = 1-0.00005f*height <0 ? 0 : 1-0.00005f*height;
-		backPaint.setARGB(255, (int)(50*function), (int)(174*function), (int)(245*function));
-		canvas.drawRect(canvas.getClipBounds(), backPaint);
-		//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
-		if(player.getPosition().bottom<canvas.getClipBounds().centerY()) {
-			//Move all layers a nudge down!
-			float dy = canvas.getClipBounds().centerY()-player.getPosition().bottom;
-			//Increment height!
-			this.height+=dy;
-			//Increment points? Points are given based on difficulty level. Higher difficulty level = harder&&more rewarding.
-			this.addPoints((int)(dy*10/BonusType.BONUS_OCCURRENCE.getMagnitude(difficulty)));
-			//Background layer moves slower than the rest -> Parallax mapping.
-			layers.get(0).move(0, dy*0.08f);
-			layers.get(1).move(0, dy);
-			layers.get(2).move(0, dy);
+		if (canvas != null) {
+			//Background color is function of achieved height. 
+			float function = 1 - 0.00005f * height < 0 ? 0
+					: 1 - 0.00005f * height;
+			backPaint.setARGB(255, (int) (50 * function),
+					(int) (174 * function), (int) (245 * function));
+			canvas.drawRect(canvas.getClipBounds(), backPaint);
+			//Player is in the top half of the screen. Move clip bounds up (Camera always follows player)
+			if (player.getPosition().bottom < canvas.getClipBounds().centerY()) {
+				//Move all layers a nudge down!
+				float dy = canvas.getClipBounds().centerY()
+						- player.getPosition().bottom;
+				//Increment height!
+				this.height += dy;
+				//Increment points? Points are given based on difficulty level. Higher difficulty level = harder&&more rewarding.
+				this.addPoints((int) (dy * 10 / BonusType.BONUS_OCCURRENCE
+						.getMagnitude(difficulty)));
+				//Background layer moves slower than the rest -> Parallax mapping.
+				layers.get(0).move(0, dy * 0.08f);
+				layers.get(1).move(0, dy);
+				layers.get(2).move(0, dy);
 
-			//Move Layers to compensate
+				//Move Layers to compensate
+			}
+			//Player is below screen. Game over. Notify GameActivity
+			if (player.getPosition().top > canvas.getClipBounds().bottom) {
+				Message msg = new Message();
+				Bundle bdl = new Bundle();
+				bdl.putInt("score", points);
+				msg.setData(bdl);
+				handler.dispatchMessage(msg);
+			}
+			for (GameLayer l : layers)
+				l.draw(canvas);
+			/*
+			 * Draw some HUD
+			 */
+			fuelFillBg.draw(canvas);
+			//Get scalation for terseness
+			PointF scl = SpriteFactory.getInstance().getScalation();
+			canvas.drawRect((int) (30 * scl.x), (int) (60 * scl.y),
+					(int) (player.getFuelLeftPerc() * 690 * scl.x),
+					(int) (90 * scl.y), fuelFill);
+			canvas.drawText(Integer.toString(points), 570 * scl.x, 40 * scl.y,
+					pointsPaint2);
+			canvas.drawText(Integer.toString(points), 570 * scl.x, 40 * scl.y,
+					pointsPaint);
 		}
-		//Player is below screen. Game over. Notify GameActivity
-		if(player.getPosition().top>canvas.getClipBounds().bottom) {
-			Message msg = new Message();
-			Bundle bdl = new Bundle();
-			bdl.putInt("score", points);
-			msg.setData(bdl);
-			handler.dispatchMessage(msg);
-		}
-		
-		
-		for(GameLayer l : layers)
-			l.draw(canvas);
-
-		/*
-		 * Draw some HUD
-		 */		
-		fuelFillBg.draw(canvas);
-		//Get scalation for terseness
-		PointF scl = SpriteFactory.getInstance().getScalation();
-		canvas.drawRect((int)(30*scl.x),(int)(60*scl.y), (int)(player.getFuelLeftPerc()*690*scl.x), (int)(90*scl.y), fuelFill);
-		canvas.drawText(Integer.toString(points), 570*scl.x, 40*scl.y, pointsPaint2);
-		canvas.drawText(Integer.toString(points), 570*scl.x, 40*scl.y, pointsPaint);
 	}
 
 	/*

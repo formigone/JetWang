@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainmenu"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/backgroundpreview"
@@ -26,7 +27,9 @@
             android:id="@+id/highScoreList"
             android:layout_width="wrap_content"
             android:layout_margin="10dp" 
-            android:layout_height="250dp">
+            android:layout_height="250dp"
+            android:cacheColorHint="@android:color/transparent"
+            >
         </ListView>
     </LinearLayout>
 
@@ -39,30 +42,4 @@
         android:layout_margin="20dp"
         android:text="@string/new_game" />
 
-<<<<<<< HEAD
 </RelativeLayout>
-=======
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
-        android:text="@string/score_header"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ListView
-        android:id="@+id/highScoreList"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="10dp"
-        android:cacheColorHint="#00000000" 
-        >
-
-    </ListView>
-
-</LinearLayout>
->>>>>>> branch 'master' of https://mads-b@github.com/spohner/JetWang.git

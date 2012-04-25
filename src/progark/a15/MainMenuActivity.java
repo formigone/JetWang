@@ -13,13 +13,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.view.ViewGroup;
-
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -30,7 +30,7 @@ public class MainMenuActivity extends Activity {
 	HighScores hs;
 	List<HighScore> hsList;
 	ArrayAdapter<HighScore> hsAdapter;
-	LinearLayout root;
+	RelativeLayout root;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -64,7 +64,7 @@ public class MainMenuActivity extends Activity {
 	
 	private void calculateScreenSize() {
 		// Get the layout id
-		root = (LinearLayout) findViewById(R.id.mainmenu);
+		root = (RelativeLayout) findViewById(R.id.mainmenu);
 		root.post(new Runnable() { 
 			public void run() { 
 				Rect rect = new Rect(); 
