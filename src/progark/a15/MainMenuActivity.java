@@ -100,6 +100,7 @@ public class MainMenuActivity extends Activity {
 	}
 	private void makeHSList() {
 		ListView scores = (ListView) this.findViewById(R.id.highScoreList);
+		scores.setFocusable(false);
 		hs = new HighScores(this);
 		hsList = hs.getTopScores(NUMBER_OF_HIGH_SCORES);
 		hsAdapter = new ArrayAdapter<HighScore>(this, R.layout.highscore_list_item, hsList) {
